@@ -110,7 +110,7 @@ public enum ClassAbility {
 	PINNING_SHOT("Pinning Shot"),
 
 	// [MeleeScout]
-	// tbd
+	ADRENALINE_RUSH("Adrenaline Rush"),
 
 	// Ranger
 	TACTICAL_MANEUVER("Tactical Maneuver"),

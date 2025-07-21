@@ -52,6 +52,7 @@ import com.playmonumenta.plugins.abilities.mage.elementalist.Blizzard;
 import com.playmonumenta.plugins.abilities.mage.elementalist.ElementalSpiritFire;
 import com.playmonumenta.plugins.abilities.mage.elementalist.ElementalSpiritIce;
 import com.playmonumenta.plugins.abilities.mage.elementalist.Starfall;
+import com.playmonumenta.plugins.abilities.meleescout.AdrenalineRush;
 import com.playmonumenta.plugins.abilities.rogue.AdvancingShadows;
 import com.playmonumenta.plugins.abilities.rogue.ByMyBlade;
 import com.playmonumenta.plugins.abilities.rogue.DaggerThrow;
@@ -922,6 +923,13 @@ public class CharmManager {
 			FireworkBlastOverworld.CHARM_FLIGHT_SPEED,
 			FireworkBlastOverworld.CHARM_ENHANCEMENT_FIREWORKS,
 			FireworkBlastOverworld.CHARM_ENHANCEMENT_DAMAGE,
+
+			//MeleeScout
+			AdrenalineRush.CHARM_DAMAGE_BOOST,
+			AdrenalineRush.CHARM_SPEED_BOOST_ON_HIT,
+			AdrenalineRush.CHARM_SPEED_BOOST_ON_SPAWNER_BREAK,
+			AdrenalineRush.CHARM_DURATION,
+			AdrenalineRush.CHARM_LEVEL_TWO_COOLDOWN_REFRESH,
 
 			//Shaman
 			TotemicEmpowerment.CHARM_SPEED,

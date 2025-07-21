@@ -1,6 +1,7 @@
 package com.playmonumenta.plugins.itemstats.enchantments;
 
 import com.playmonumenta.plugins.Plugin;
+import com.playmonumenta.plugins.abilities.meleescout.AdrenalineRush;
 import com.playmonumenta.plugins.effects.PercentSpeed;
 import com.playmonumenta.plugins.events.DamageEvent;
 import com.playmonumenta.plugins.events.DamageEvent.DamageType;
@@ -38,9 +39,14 @@ public class Adrenaline implements Enchantment {
 	@Override
 	public void onDamage(Plugin plugin, Player player, double value, DamageEvent event, LivingEntity enemy) {
 		if (event.getType() == DamageType.MELEE) {
+			// Melee Scout "Adrenaline Rush" Enhancement: Double the effect and length of the Adrenaline enchantment.
+			AdrenalineRush ar = plugin.mAbilityManager.getPlayerAbilityIgnoringSilence(player, AdrenalineRush.class);
+			boolean hasAdrenalineRushEnhancement = ar != null && ar.isEnhanced();
+			int mult = hasAdrenalineRushEnhancement ? 2 : 1;
+
 			new PartialParticle(Particle.REDSTONE, player.getLocation().add(0, 1, 0), 12, 0.4, 0.5, 0.4, RED_COLOR).spawnAsPlayerBuff(player);
 			double speedAmount = PERCENT_SPEED_PER_LEVEL * value;
-			plugin.mEffectManager.addEffect(player, PERCENT_SPEED_EFFECT_NAME, new PercentSpeed(DURATION, speedAmount, PERCENT_SPEED_EFFECT_NAME));
+			plugin.mEffectManager.addEffect(player, PERCENT_SPEED_EFFECT_NAME, new PercentSpeed(DURATION * mult, speedAmount * mult, PERCENT_SPEED_EFFECT_NAME));
 		}
 	}
 
@@ -50,9 +56,13 @@ public class Adrenaline implements Enchantment {
 			if (!SpawnerUtils.tryBreakSpawner(event.getBlock(), 1 + Plugin.getInstance().mItemStatManager.getEnchantmentLevel(event.getPlayer(), EnchantmentType.DRILLING), false)) {
 				return;
 			}
+			// Melee Scout "Adrenaline Rush" Enhancement: Double the effect and length of the Adrenaline enchantment.
+			AdrenalineRush ar = plugin.mAbilityManager.getPlayerAbilityIgnoringSilence(player, AdrenalineRush.class);
+			boolean hasAdrenalineRushEnhancement = ar != null && ar.isEnhanced();
+			int mult = hasAdrenalineRushEnhancement ? 2 : 1;
 			new PartialParticle(Particle.REDSTONE, player.getLocation().add(0, 1, 0), 12, 0.4, 0.5, 0.4, RED_COLOR).spawnAsPlayerBuff(player);
 			double speedAmount = PERCENT_SPEED_PER_LEVEL * value * 0.5;
-			plugin.mEffectManager.addEffect(player, PERCENT_SPEED_EFFECT_NAME, new PercentSpeed(SPAWNER_DURATION, speedAmount, PERCENT_SPEED_EFFECT_NAME));
+			plugin.mEffectManager.addEffect(player, PERCENT_SPEED_EFFECT_NAME, new PercentSpeed(SPAWNER_DURATION * mult, speedAmount * mult, PERCENT_SPEED_EFFECT_NAME));
 		}
 	}
 }
