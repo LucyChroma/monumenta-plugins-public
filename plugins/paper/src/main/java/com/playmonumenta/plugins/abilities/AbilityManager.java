@@ -74,18 +74,15 @@ import com.playmonumenta.plugins.abilities.rogue.swordsage.BladeDance;
 import com.playmonumenta.plugins.abilities.rogue.swordsage.DeadlyRonde;
 import com.playmonumenta.plugins.abilities.rogue.swordsage.WindWalk;
 import com.playmonumenta.plugins.abilities._unused.Agility;
-import com.playmonumenta.plugins.abilities.scout.EagleEye;
+import com.playmonumenta.plugins.abilities.scout.*;
 import com.playmonumenta.plugins.abilities._unused.HuntingCompanion;
-import com.playmonumenta.plugins.abilities.scout.Sharpshooter;
 import com.playmonumenta.plugins.abilities._unused.SwiftCuts;
 import com.playmonumenta.plugins.abilities._unused.Swiftness;
 import com.playmonumenta.plugins.abilities._unused.Versatile;
-import com.playmonumenta.plugins.abilities.scout.Volley;
 import com.playmonumenta.plugins.abilities.scout.bombardier.WindBomb;
 import com.playmonumenta.plugins.abilities.scout.hunter.PinningShot;
 import com.playmonumenta.plugins.abilities._unused.PredatorStrike;
 import com.playmonumenta.plugins.abilities.scout.hunter.SplitArrow;
-import com.playmonumenta.plugins.abilities.scout.Quickdraw;
 import com.playmonumenta.plugins.abilities.meleescout.ranger.TacticalManeuver;
 import com.playmonumenta.plugins.abilities.meleescout.ranger.WhirlingBlade;
 import com.playmonumenta.plugins.abilities.shaman.ChainLightning;
@@ -286,6 +283,7 @@ public class AbilityManager {
 			SwiftCuts.INFO,
 			Sharpshooter.INFO,
 			WindBomb.INFO,
+			ScrapshotOverworld.INFO,
 
 			//********** WARRIOR **********//
 			CounterStrike.INFO,

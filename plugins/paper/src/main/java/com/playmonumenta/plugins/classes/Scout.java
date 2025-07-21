@@ -2,17 +2,14 @@ package com.playmonumenta.plugins.classes;
 
 import com.google.common.collect.ImmutableList;
 import com.playmonumenta.plugins.abilities.PlaceholderAbility;
-import com.playmonumenta.plugins.abilities.scout.EagleEye;
+import com.playmonumenta.plugins.abilities.scout.*;
 import com.playmonumenta.plugins.abilities._unused.HuntingCompanion;
-import com.playmonumenta.plugins.abilities.scout.Sharpshooter;
 import com.playmonumenta.plugins.abilities._unused.Swiftness;
 import com.playmonumenta.plugins.abilities._unused.Versatile;
-import com.playmonumenta.plugins.abilities.scout.Volley;
 import com.playmonumenta.plugins.abilities.scout.bombardier.WindBomb;
 import com.playmonumenta.plugins.abilities.scout.hunter.PinningShot;
 import com.playmonumenta.plugins.abilities._unused.PredatorStrike;
 import com.playmonumenta.plugins.abilities.scout.hunter.SplitArrow;
-import com.playmonumenta.plugins.abilities.scout.Quickdraw;
 import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.Material;
 
@@ -30,7 +27,7 @@ public class Scout extends PlayerClass {
 		mAbilities.add(Volley.INFO);
 		mAbilities.add(Sharpshooter.INFO);
 		mAbilities.add(PlaceholderAbility.INFO); // distant visions
-		mAbilities.add(PlaceholderAbility.INFO); // scrapshot
+		mAbilities.add(ScrapshotOverworld.INFO); // scrapshot
 		mAbilities.add(PlaceholderAbility.INFO); // firework blast
 		mClass = CLASS_ID;
 		mClassName = "Scout";
@@ -65,6 +62,7 @@ public class Scout extends PlayerClass {
 			Swiftness.INFO,
 			WindBomb.INFO,
 			HuntingCompanion.INFO, // after wind bomb
+			ScrapshotOverworld.INFO,
 
 			PredatorStrike.INFO,
 

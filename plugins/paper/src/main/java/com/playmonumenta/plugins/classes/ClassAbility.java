@@ -85,24 +85,38 @@ public enum ClassAbility {
 	LUMINOUS_INFUSION("Luminous Infusion"),
 
 	// [Scout]
+	QUICKDRAW("Quickdraw"),
+	SPECIALISTS_QUIVER("Specialist's Quiver"),
 	EAGLE_EYE("Eagle Eye"),
 	VOLLEY("Volley"),
-	WIND_BOMB("Wind Bomb"),
+	SHARPSHOOTER("Sharpshooter"),
+	DISTANT_VISIONS("Distant Visions"),
+	SCRAPSHOT_OVERWORLD("Scrapshot"),
+	FIREWORK_BLAST_OVERWORLD("Firework Blast"),
+
 	HUNTING_COMPANION("Hunting Companion"),
 	SWIFT_CUTS("Swift Cuts"), //placeholder for cosmetic
 	SWIFTNESS("Swiftness"),
-	SHARPSHOOTER("Sharpshooter"),
 	AGILITY("Agility"),
+
+	// Bombardier
+	WIND_BOMB("Wind Bomb"),
+	GRAVITY_BOMB_OVERWORLD("Gravity Bomb"),
+	RENDING_RAZOR("Rending Razor"),
 
 	// Hunter
 	PREDATOR_STRIKE("Predator Strike"),
 	SPLIT_ARROW("Split Arrow"),
 	PINNING_SHOT("Pinning Shot"),
 
+	// [MeleeScout]
+	// tbd
+
 	// Ranger
 	TACTICAL_MANEUVER("Tactical Maneuver"),
-	QUICKDRAW("Quickdraw"),
 	WHIRLING_BLADE("Whirling Blade"),
+
+	// Strategist
 
 	// [Warlock]
 	AMPLIFYING("Amplifying Hex"),
