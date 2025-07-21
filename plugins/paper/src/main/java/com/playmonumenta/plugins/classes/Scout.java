@@ -45,7 +45,6 @@ public class Scout extends PlayerClass {
 		mSpecOne.mAbilities.add(WindBomb.INFO);
 		mSpecOne.mAbilities.add(GravityBombOverworld.INFO); // gbomb
 		mSpecOne.mAbilities.add(RendingRazor.INFO); // razor
-		mSpecOne.mAbilities.add(Munitions.INFO);
 		mSpecOne.mSpecQuestScoreboard = "Quest103";
 		mSpecOne.mSpecialization = BOMBARDIER_SPEC_ID;
 		mSpecOne.mSpecName = "Bombardier";
