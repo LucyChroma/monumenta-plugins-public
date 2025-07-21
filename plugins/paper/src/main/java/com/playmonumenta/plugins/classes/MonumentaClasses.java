@@ -22,6 +22,7 @@ public class MonumentaClasses {
 		mClasses.add(new Shaman());
 		mClasses.add(new Warlock());
 		mClasses.add(new Warrior());
+		mClasses.add(new MeleeScout());
 
 		mTriggerOrder = mClasses.stream()
 			                .flatMap(c -> c.mTriggerOrder.stream())

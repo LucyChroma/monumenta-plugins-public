@@ -1,21 +1,18 @@
 package com.playmonumenta.plugins.classes;
 
 import com.google.common.collect.ImmutableList;
-import com.playmonumenta.plugins.abilities.scout.Agility;
+import com.playmonumenta.plugins.abilities.PlaceholderAbility;
 import com.playmonumenta.plugins.abilities.scout.EagleEye;
-import com.playmonumenta.plugins.abilities.scout.HuntingCompanion;
+import com.playmonumenta.plugins.abilities._unused.HuntingCompanion;
 import com.playmonumenta.plugins.abilities.scout.Sharpshooter;
-import com.playmonumenta.plugins.abilities.scout.SwiftCuts;
-import com.playmonumenta.plugins.abilities.scout.Swiftness;
-import com.playmonumenta.plugins.abilities.scout.Versatile;
+import com.playmonumenta.plugins.abilities._unused.Swiftness;
+import com.playmonumenta.plugins.abilities._unused.Versatile;
 import com.playmonumenta.plugins.abilities.scout.Volley;
-import com.playmonumenta.plugins.abilities.scout.WindBomb;
+import com.playmonumenta.plugins.abilities.scout.bombardier.WindBomb;
 import com.playmonumenta.plugins.abilities.scout.hunter.PinningShot;
-import com.playmonumenta.plugins.abilities.scout.hunter.PredatorStrike;
+import com.playmonumenta.plugins.abilities._unused.PredatorStrike;
 import com.playmonumenta.plugins.abilities.scout.hunter.SplitArrow;
-import com.playmonumenta.plugins.abilities.scout.ranger.Quickdraw;
-import com.playmonumenta.plugins.abilities.scout.ranger.TacticalManeuver;
-import com.playmonumenta.plugins.abilities.scout.ranger.WhirlingBlade;
+import com.playmonumenta.plugins.abilities.scout.Quickdraw;
 import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.Material;
 
@@ -23,18 +20,18 @@ import org.bukkit.Material;
 public class Scout extends PlayerClass {
 
 	public static final int CLASS_ID = 6;
-	public static final int RANGER_SPEC_ID = 11;
+	public static final int BOMBARDIER_SPEC_ID = 11;
 	public static final int HUNTER_SPEC_ID = 12;
 
 	public Scout() {
-		mAbilities.add(Agility.INFO);
-		mAbilities.add(HuntingCompanion.INFO);
+		mAbilities.add(Quickdraw.INFO);
+		mAbilities.add(PlaceholderAbility.INFO); // specialist's quiver
 		mAbilities.add(EagleEye.INFO);
-		mAbilities.add(WindBomb.INFO);
-		mAbilities.add(Sharpshooter.INFO);
-		mAbilities.add(SwiftCuts.INFO);
-		mAbilities.add(Swiftness.INFO);
 		mAbilities.add(Volley.INFO);
+		mAbilities.add(Sharpshooter.INFO);
+		mAbilities.add(PlaceholderAbility.INFO); // distant visions
+		mAbilities.add(PlaceholderAbility.INFO); // scrapshot
+		mAbilities.add(PlaceholderAbility.INFO); // firework blast
 		mClass = CLASS_ID;
 		mClassName = "Scout";
 		mClassColor = TextColor.fromHexString("#59B4EB");
@@ -45,18 +42,18 @@ public class Scout extends PlayerClass {
 			(int) (Versatile.DAMAGE_MULTIPLY_MELEE * 100), (int) (Versatile.DAMAGE_MULTIPLY_PROJ * 100));
 		mClassPassiveName = "Versatile";
 
-		mSpecOne.mAbilities.add(Quickdraw.INFO);
-		mSpecOne.mAbilities.add(WhirlingBlade.INFO);
-		mSpecOne.mAbilities.add(TacticalManeuver.INFO);
-		mSpecOne.mSpecQuestScoreboard = "Quest103e";
-		mSpecOne.mSpecialization = RANGER_SPEC_ID;
-		mSpecOne.mSpecName = "Ranger";
-		mSpecOne.mDisplayItem = Material.WHEAT;
-		mSpecOne.mDescription = "Rangers are agile experts of exploration that have unparalleled mastery of movement.";
+		mSpecOne.mAbilities.add(WindBomb.INFO);
+		mSpecOne.mAbilities.add(PlaceholderAbility.INFO); // gbomb
+		mSpecOne.mAbilities.add(PlaceholderAbility.INFO); // razor
+		mSpecOne.mSpecQuestScoreboard = "Quest103";
+		mSpecOne.mSpecialization = BOMBARDIER_SPEC_ID;
+		mSpecOne.mSpecName = "Bombardier";
+		mSpecOne.mDisplayItem = Material.GUNPOWDER;
+		mSpecOne.mDescription = "Bombardier description goes here. Replace me";
 
 		mSpecTwo.mAbilities.add(PinningShot.INFO);
 		mSpecTwo.mAbilities.add(SplitArrow.INFO);
-		mSpecTwo.mAbilities.add(PredatorStrike.INFO);
+		mSpecTwo.mAbilities.add(PlaceholderAbility.INFO); // predator missile
 		mSpecTwo.mSpecQuestScoreboard = "Quest103l";
 		mSpecTwo.mSpecialization = HUNTER_SPEC_ID;
 		mSpecTwo.mSpecName = "Hunter";
@@ -71,9 +68,7 @@ public class Scout extends PlayerClass {
 
 			PredatorStrike.INFO,
 
-			Quickdraw.INFO, // after eagle eye
-			TacticalManeuver.INFO,
-			WhirlingBlade.INFO // after wind bomb
+			Quickdraw.INFO
 		);
 	}
 }

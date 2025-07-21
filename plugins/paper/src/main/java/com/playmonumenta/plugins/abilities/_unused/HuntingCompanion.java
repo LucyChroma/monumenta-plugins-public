@@ -1,4 +1,4 @@
-package com.playmonumenta.plugins.abilities.scout;
+package com.playmonumenta.plugins.abilities._unused;
 
 import com.playmonumenta.plugins.Plugin;
 import com.playmonumenta.plugins.abilities.Ability;

@@ -5,17 +5,7 @@ import com.playmonumenta.plugins.Plugin;
 import com.playmonumenta.plugins.abilities.AbilityInfo;
 import com.playmonumenta.plugins.abilities.AbilityManager;
 import com.playmonumenta.plugins.abilities.scout.Volley;
-import com.playmonumenta.plugins.classes.Alchemist;
-import com.playmonumenta.plugins.classes.ClassAbility;
-import com.playmonumenta.plugins.classes.Cleric;
-import com.playmonumenta.plugins.classes.Mage;
-import com.playmonumenta.plugins.classes.MonumentaClasses;
-import com.playmonumenta.plugins.classes.PlayerClass;
-import com.playmonumenta.plugins.classes.Rogue;
-import com.playmonumenta.plugins.classes.Scout;
-import com.playmonumenta.plugins.classes.Shaman;
-import com.playmonumenta.plugins.classes.Warlock;
-import com.playmonumenta.plugins.classes.Warrior;
+import com.playmonumenta.plugins.classes.*;
 import com.playmonumenta.plugins.cosmetics.skills.StealthCosmeticSkill;
 import com.playmonumenta.plugins.depths.DepthsUtils;
 import com.playmonumenta.plugins.depths.abilities.steelsage.DepthsVolley;
@@ -291,6 +281,7 @@ public class AbilityUtils {
 			case Scout.CLASS_ID -> "Scout";
 			case Warlock.CLASS_ID -> "Warlock";
 			case Shaman.CLASS_ID -> "Shaman";
+			case MeleeScout.CLASS_ID -> "MeleeScout";
 			default -> "No Class";
 		};
 	}
@@ -305,6 +296,7 @@ public class AbilityUtils {
 			case "Scout" -> Scout.CLASS_ID;
 			case "Warlock" -> Warlock.CLASS_ID;
 			case "Shaman" -> Shaman.CLASS_ID;
+			case "MeleeScout" -> MeleeScout.CLASS_ID;
 			default -> 0;
 		};
 	}
@@ -333,12 +325,14 @@ public class AbilityUtils {
 			case Rogue.ASSASSIN_SPEC_ID -> "Assassin";
 			case Alchemist.HARBINGER_SPEC_ID -> "Harbinger";
 			case Alchemist.APOTHECARY_SPEC_ID -> "Apothecary";
-			case Scout.RANGER_SPEC_ID -> "Ranger";
+			case Scout.BOMBARDIER_SPEC_ID -> "Ranger";
 			case Scout.HUNTER_SPEC_ID -> "Hunter";
 			case Warlock.REAPER_SPEC_ID -> "Reaper";
 			case Warlock.TENEBRIST_SPEC_ID -> "Tenebrist";
 			case Shaman.SOOTHSAYER_ID -> "Soothsayer";
 			case Shaman.HEXBREAKER_ID -> "Hexbreaker";
+			case MeleeScout.RANGER_SPEC_ID -> "Ranger";
+			case MeleeScout.STRATEGIST_SPEC_ID -> "Strategist";
 			default -> "No Spec";
 		};
 	}
@@ -355,13 +349,15 @@ public class AbilityUtils {
 			case "Assassin" -> Rogue.ASSASSIN_SPEC_ID;
 			case "Harbinger" -> Alchemist.HARBINGER_SPEC_ID;
 			case "Apothecary" -> Alchemist.APOTHECARY_SPEC_ID;
-			case "Ranger" -> Scout.RANGER_SPEC_ID;
+			case "Bombardier" -> Scout.BOMBARDIER_SPEC_ID;
 			case "Hunter" -> Scout.HUNTER_SPEC_ID;
 			case "Reaper" -> Warlock.REAPER_SPEC_ID;
 			case "Tenebrist" -> Warlock.TENEBRIST_SPEC_ID;
 			case "Soothsayer" -> Shaman.SOOTHSAYER_ID;
 			case "Soulbreaker" -> Shaman.HEXBREAKER_ID;
 			case "Hexbreaker" -> Shaman.HEXBREAKER_ID;
+			case "Ranger" -> MeleeScout.RANGER_SPEC_ID;
+			case "Strategist" -> MeleeScout.STRATEGIST_SPEC_ID;
 			default -> 0;
 		};
 	}

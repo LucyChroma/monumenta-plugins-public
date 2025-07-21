@@ -1,4 +1,4 @@
-package com.playmonumenta.plugins.abilities.scout.hunter;
+package com.playmonumenta.plugins.abilities._unused;
 
 import com.playmonumenta.plugins.Plugin;
 import com.playmonumenta.plugins.abilities.Ability;
@@ -7,7 +7,6 @@ import com.playmonumenta.plugins.abilities.AbilityManager;
 import com.playmonumenta.plugins.abilities.AbilityTrigger;
 import com.playmonumenta.plugins.abilities.AbilityTriggerInfo;
 import com.playmonumenta.plugins.abilities.AbilityWithDuration;
-import com.playmonumenta.plugins.abilities.scout.SwiftCuts;
 import com.playmonumenta.plugins.classes.ClassAbility;
 import com.playmonumenta.plugins.cosmetics.skills.CosmeticSkills;
 import com.playmonumenta.plugins.cosmetics.skills.scout.hunter.PredatorStrikeCS;

@@ -1,7 +1,7 @@
 package com.playmonumenta.plugins.classes;
 
 import com.google.common.collect.ImmutableList;
-import com.playmonumenta.plugins.abilities.scout.ranger.TacticalManeuver;
+import com.playmonumenta.plugins.abilities.meleescout.ranger.TacticalManeuver;
 import com.playmonumenta.plugins.abilities.shaman.ChainLightning;
 import com.playmonumenta.plugins.abilities.shaman.CleansingTotem;
 import com.playmonumenta.plugins.abilities.shaman.CrystallineCombos;

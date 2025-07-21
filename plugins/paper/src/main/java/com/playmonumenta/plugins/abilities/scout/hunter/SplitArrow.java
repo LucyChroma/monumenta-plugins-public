@@ -3,7 +3,7 @@ package com.playmonumenta.plugins.abilities.scout.hunter;
 import com.playmonumenta.plugins.Plugin;
 import com.playmonumenta.plugins.abilities.Ability;
 import com.playmonumenta.plugins.abilities.AbilityInfo;
-import com.playmonumenta.plugins.abilities.scout.SwiftCuts;
+import com.playmonumenta.plugins.abilities._unused.SwiftCuts;
 import com.playmonumenta.plugins.classes.ClassAbility;
 import com.playmonumenta.plugins.cosmetics.skills.CosmeticSkills;
 import com.playmonumenta.plugins.cosmetics.skills.scout.hunter.SplitArrowCS;

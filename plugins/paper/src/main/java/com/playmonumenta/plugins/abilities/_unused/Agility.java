@@ -1,13 +1,15 @@
-package com.playmonumenta.plugins.abilities.scout;
+package com.playmonumenta.plugins.abilities._unused;
 
 import com.playmonumenta.plugins.Plugin;
 import com.playmonumenta.plugins.abilities.Ability;
 import com.playmonumenta.plugins.abilities.AbilityInfo;
 import com.playmonumenta.plugins.abilities.AbilityManager;
-import com.playmonumenta.plugins.abilities.scout.hunter.PredatorStrike;
-import com.playmonumenta.plugins.abilities.scout.ranger.Quickdraw;
-import com.playmonumenta.plugins.abilities.scout.ranger.TacticalManeuver;
-import com.playmonumenta.plugins.abilities.scout.ranger.WhirlingBlade;
+import com.playmonumenta.plugins.abilities.scout.EagleEye;
+import com.playmonumenta.plugins.abilities.scout.Quickdraw;
+import com.playmonumenta.plugins.abilities.scout.Volley;
+import com.playmonumenta.plugins.abilities.scout.bombardier.WindBomb;
+import com.playmonumenta.plugins.abilities.meleescout.ranger.TacticalManeuver;
+import com.playmonumenta.plugins.abilities.meleescout.ranger.WhirlingBlade;
 import com.playmonumenta.plugins.classes.ClassAbility;
 import com.playmonumenta.plugins.cosmetics.skills.CosmeticSkills;
 import com.playmonumenta.plugins.cosmetics.skills.scout.AgilityCS;

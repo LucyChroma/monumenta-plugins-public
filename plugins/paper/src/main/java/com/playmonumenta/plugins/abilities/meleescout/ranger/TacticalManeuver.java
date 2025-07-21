@@ -1,11 +1,11 @@
-package com.playmonumenta.plugins.abilities.scout.ranger;
+package com.playmonumenta.plugins.abilities.meleescout.ranger;
 
 import com.playmonumenta.plugins.Plugin;
 import com.playmonumenta.plugins.abilities.AbilityInfo;
 import com.playmonumenta.plugins.abilities.AbilityTrigger;
 import com.playmonumenta.plugins.abilities.AbilityTriggerInfo;
 import com.playmonumenta.plugins.abilities.MultipleChargeAbility;
-import com.playmonumenta.plugins.abilities.scout.SwiftCuts;
+import com.playmonumenta.plugins.abilities._unused.SwiftCuts;
 import com.playmonumenta.plugins.classes.ClassAbility;
 import com.playmonumenta.plugins.cosmetics.skills.CosmeticSkills;
 import com.playmonumenta.plugins.cosmetics.skills.scout.ranger.TacticalManeuverCS;
