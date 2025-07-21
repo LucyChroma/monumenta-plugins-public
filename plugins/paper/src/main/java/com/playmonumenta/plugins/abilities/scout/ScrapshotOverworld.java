@@ -111,7 +111,7 @@ public class ScrapshotOverworld extends Ability {
 				DAMAGE_VALLEY;
 		if (target != null) {
 			double dist = endLoc.distance(loc);
-			mult = Math.min(1, (mRange * 1.25 - dist) / mRange);
+			mult = Math.min(1, (mRange * 1.5 - dist) / mRange);
 			double damage = mult * baseDamage;
 			DamageUtils.damage(mPlayer, target, DamageEvent.DamageType.PROJECTILE_SKILL, damage, mInfo.getLinkedSpell(), true, true);
 			if(isEnhanced()) { EntityUtils.applyStun(mPlugin, ENHANCEMENT_DURATION, target); }
