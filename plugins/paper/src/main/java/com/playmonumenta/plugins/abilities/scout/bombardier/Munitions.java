@@ -29,13 +29,11 @@ public class Munitions extends MultipleChargeAbility {
 			mSkillClass = skillClass;
 		}
 
-		public boolean castSkill(Player player){
+		public boolean castSkill(Munitions munitions){
 			if(this == NONE) return false;
-			Ability ability = AbilityManager.getManager().getPlayerAbilityIgnoringSilence(player, mSkillClass);
-			if(ability == null) return false;
-			if(this == WIND_BOMB) return ((WindBomb) ability).cast();
-			if(this == GRAVITY_BOMB) return ((GravityBombOverworld) ability).cast();
-			if(this == RENDING_RAZOR) return ((RendingRazor) ability).cast();
+			if(this == WIND_BOMB) return munitions.mWindBomb.cast();
+			if(this == GRAVITY_BOMB) return munitions.mGravityBomb.cast();
+			if(this == RENDING_RAZOR) return munitions.mRendingRazor.cast();
 			return false;
 		}
 
@@ -55,6 +53,15 @@ public class Munitions extends MultipleChargeAbility {
 				case WIND_BOMB -> GRAVITY_BOMB;
 				case GRAVITY_BOMB -> RENDING_RAZOR;
 				case RENDING_RAZOR, NONE -> WIND_BOMB;
+			};
+		}
+
+		public Ability getSkillInstance(Munitions munitions){
+			return switch(this){
+				case WIND_BOMB -> munitions.mWindBomb;
+				case GRAVITY_BOMB -> munitions.mGravityBomb;
+				case RENDING_RAZOR -> munitions.mRendingRazor;
+				default -> null;
 			};
 		}
 	}
@@ -87,6 +94,9 @@ public class Munitions extends MultipleChargeAbility {
 			.canUse(player -> AbilityUtils.getSpecNum(player) == Scout.BOMBARDIER_SPEC_ID);
 
 	SelectedSkill mSelectedSkill;
+	WindBomb mWindBomb;
+	GravityBombOverworld mGravityBomb;
+	RendingRazor mRendingRazor;
 
 	public Munitions(Plugin plugin, Player player) {
 		super(plugin, player, INFO);
@@ -100,16 +110,21 @@ public class Munitions extends MultipleChargeAbility {
 		mMaxCharges = MAX_CHARGES + (int) CharmManager.getLevel(player, CHARM_MAX_CHARGES);
 		mSelectedSkill = SelectedSkill.NONE;
 		// why we need runtask: https://discord.com/channels/1134995398595977227/1394016576944078922/1394039011168751772
-		Bukkit.getScheduler().runTask(plugin, () -> mSelectedSkill = SelectedSkill.NONE.swapSkill(player, true));
+		Bukkit.getScheduler().runTask(plugin, () -> {
+			mSelectedSkill = SelectedSkill.NONE.swapSkill(player, true);
+			mWindBomb = AbilityManager.getManager().getPlayerAbilityIgnoringSilence(mPlayer, WindBomb.class);
+			mGravityBomb = AbilityManager.getManager().getPlayerAbilityIgnoringSilence(mPlayer, GravityBombOverworld.class);
+			mRendingRazor = AbilityManager.getManager().getPlayerAbilityIgnoringSilence(mPlayer, RendingRazor.class);
+		});
 	}
 
 	public boolean cast() {
-		boolean temp = mSelectedSkill.castSkill(mPlayer);
-		if (temp) {
-			consumeCharge();
+		if (consumeCharge()) {
+			mSelectedSkill.castSkill(this);
 			putOnCooldown();
+			return true;
 		}
-		return temp;
+		return false;
 	}
 
 	public boolean swap() {
@@ -126,9 +141,16 @@ public class Munitions extends MultipleChargeAbility {
 	@Override
 	public Component getHotbarMessage(){
 		Component output = Component.text("[", NamedTextColor.YELLOW)
-			.append(Component.text("Munitions", INFO.getActionBarColor()))
+			.append(Component.text("Mun", INFO.getActionBarColor()))
 			.append(Component.text("]", NamedTextColor.YELLOW))
 			.append(Component.text(": ", NamedTextColor.WHITE));
+
+		Ability skillInstance = mSelectedSkill.getSkillInstance(this);
+		if (skillInstance != null) {
+			// output = output.append(Component.text(" ", NamedTextColor.YELLOW));
+			output = output.append(Component.text(skillInstance.getInfo().getHotbarName(), NamedTextColor.GRAY));
+			output = output.append(Component.text(" ", NamedTextColor.YELLOW));
+		}
 
 		int remainingCooldown = mPlugin.mTimers.getCooldown(mPlayer.getUniqueId(), ClassAbility.MUNITIONS);
 

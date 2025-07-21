@@ -72,6 +72,7 @@ import com.playmonumenta.plugins.abilities.scout.*;
 import com.playmonumenta.plugins.abilities._unused.HuntingCompanion;
 import com.playmonumenta.plugins.abilities._unused.SwiftCuts;
 import com.playmonumenta.plugins.abilities._unused.Swiftness;
+import com.playmonumenta.plugins.abilities.scout.bombardier.GravityBombOverworld;
 import com.playmonumenta.plugins.abilities.scout.bombardier.WindBomb;
 import com.playmonumenta.plugins.abilities.scout.hunter.PinningShot;
 import com.playmonumenta.plugins.abilities._unused.PredatorStrike;
@@ -923,6 +924,10 @@ public class CharmManager {
 			FireworkBlastOverworld.CHARM_FLIGHT_SPEED,
 			FireworkBlastOverworld.CHARM_ENHANCEMENT_FIREWORKS,
 			FireworkBlastOverworld.CHARM_ENHANCEMENT_DAMAGE,
+			GravityBombOverworld.CHARM_COOLDOWN,
+			GravityBombOverworld.CHARM_COUNT,
+			GravityBombOverworld.CHARM_DAMAGE,
+			GravityBombOverworld.CHARM_RADIUS,
 
 			//MeleeScout
 			AdrenalineRush.CHARM_DAMAGE_BOOST,

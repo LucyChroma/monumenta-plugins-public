@@ -13,6 +13,7 @@ public class RendingRazor extends Ability {
 		new AbilityInfo<>(RendingRazor.class, "Rending Razor", RendingRazor::new)
 			.linkedSpell(ClassAbility.RENDING_RAZOR)
 			.scoreboardId("RendingRazor")
+			.shorthandName("RR")
 			.descriptions(
 				String.format("Placeholder ability level %s.",
 					1),
@@ -29,6 +30,6 @@ public class RendingRazor extends Ability {
 
 	public boolean cast() {
 		mPlayer.sendRawMessage("Rending Razor cast! (placeholder)");
-		return false;
+		return true;
 	}
 }
