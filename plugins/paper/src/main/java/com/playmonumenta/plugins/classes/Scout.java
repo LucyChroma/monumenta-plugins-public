@@ -12,6 +12,7 @@ import com.playmonumenta.plugins.abilities.scout.bombardier.RendingRazor;
 import com.playmonumenta.plugins.abilities.scout.bombardier.WindBomb;
 import com.playmonumenta.plugins.abilities.scout.hunter.PinningShot;
 import com.playmonumenta.plugins.abilities._unused.PredatorStrike;
+import com.playmonumenta.plugins.abilities.scout.hunter.PredatorMissile;
 import com.playmonumenta.plugins.abilities.scout.hunter.SplitArrow;
 import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.Material;
@@ -53,7 +54,7 @@ public class Scout extends PlayerClass {
 
 		mSpecTwo.mAbilities.add(PinningShot.INFO);
 		mSpecTwo.mAbilities.add(SplitArrow.INFO);
-		mSpecTwo.mAbilities.add(PlaceholderAbility.INFO); // predator missile
+		mSpecTwo.mAbilities.add(PredatorMissile.INFO); // predator missile
 		mSpecTwo.mSpecQuestScoreboard = "Quest103l";
 		mSpecTwo.mSpecialization = HUNTER_SPEC_ID;
 		mSpecTwo.mSpecName = "Hunter";
