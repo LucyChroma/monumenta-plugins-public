@@ -29,12 +29,11 @@ public class Munitions extends MultipleChargeAbility {
 			mSkillClass = skillClass;
 		}
 
-		public boolean castSkill(Munitions munitions){
-			if(this == NONE) return false;
-			if(this == WIND_BOMB) return munitions.mWindBomb.cast();
-			if(this == GRAVITY_BOMB) return munitions.mGravityBomb.cast();
-			if(this == RENDING_RAZOR) return munitions.mRendingRazor.cast();
-			return false;
+		public void castSkill(Munitions munitions){
+			if(this == NONE) return;
+			if(this == WIND_BOMB) munitions.mWindBomb.cast();
+			if(this == GRAVITY_BOMB) munitions.mGravityBomb.cast();
+			if(this == RENDING_RAZOR) munitions.mRendingRazor.cast();
 		}
 
 		public SelectedSkill swapSkill(Player player, boolean suppressError){
@@ -146,7 +145,7 @@ public class Munitions extends MultipleChargeAbility {
 			.append(Component.text(": ", NamedTextColor.WHITE));
 
 		Ability skillInstance = mSelectedSkill.getSkillInstance(this);
-		if (skillInstance != null) {
+		if (skillInstance != null && skillInstance.getInfo().getHotbarName() != null) {
 			// output = output.append(Component.text(" ", NamedTextColor.YELLOW));
 			output = output.append(Component.text(skillInstance.getInfo().getHotbarName(), NamedTextColor.GRAY));
 			output = output.append(Component.text(" ", NamedTextColor.YELLOW));
