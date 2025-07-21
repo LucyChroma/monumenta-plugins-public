@@ -7,7 +7,6 @@ import com.playmonumenta.plugins.events.DamageEvent;
 import com.playmonumenta.plugins.itemstats.abilities.CharmManager;
 import com.playmonumenta.plugins.particle.PPLine;
 import com.playmonumenta.plugins.particle.PartialParticle;
-import com.playmonumenta.plugins.server.properties.ServerProperties;
 import com.playmonumenta.plugins.utils.*;
 import org.bukkit.*;
 import org.bukkit.entity.LivingEntity;
@@ -106,9 +105,7 @@ public class ScrapshotOverworld extends Ability {
 		}
 
 		double mult = 0;
-		double baseDamage = ServerProperties.getAbilityEnhancementsEnabled(mPlayer) ? mRingDamage :
-			ServerProperties.getClassSpecializationsEnabled(mPlayer) ? DAMAGE_ISLES :
-				DAMAGE_VALLEY;
+		double baseDamage = PlayerUtils.getDifferentValuePerRegion(mPlayer, DAMAGE_VALLEY, DAMAGE_ISLES, mRingDamage);
 		if (target != null) {
 			double dist = endLoc.distance(loc);
 			mult = Math.min(1, (mRange * 1.5 - dist) / mRange);

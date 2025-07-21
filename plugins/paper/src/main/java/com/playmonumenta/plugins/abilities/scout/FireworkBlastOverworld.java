@@ -10,7 +10,6 @@ import com.playmonumenta.plugins.particle.PPCircle;
 import com.playmonumenta.plugins.particle.PPLine;
 import com.playmonumenta.plugins.particle.PPPeriodic;
 import com.playmonumenta.plugins.particle.PartialParticle;
-import com.playmonumenta.plugins.server.properties.ServerProperties;
 import com.playmonumenta.plugins.utils.*;
 import org.bukkit.*;
 import org.bukkit.Particle.DustTransition;
@@ -31,7 +30,7 @@ public class FireworkBlastOverworld extends Ability {
 	private static final int DAMAGE_VALLEY = 10;
 	private static final int DAMAGE_ISLES = 15;
 	private static final int DAMAGE_RING = 20;
-	private static final double RADIUS = 5;
+	private static final double RADIUS = 2;
 	private static final double DAMAGE_INCREASE_PER_BLOCK = 0.1;
 	private static final double DAMAGE_INCREASE_MAX_DISTANCE = 15;
 	private static final double FLIGHT_SPEED_1 = 0.075;
@@ -61,12 +60,27 @@ public class FireworkBlastOverworld extends Ability {
 			.scoreboardId("FireworkBlast")
 			.shorthandName("FB")
 			.descriptions(
-				String.format("Placeholder ability level %s.",
-					1),
-				String.format("Placeholder ability level %s.",
-					2),
-				String.format("Placeholder ability enhancement. :%s",
-					3))
+				String.format("Press drop while holding a projectile weapon to fire a slow-moving firework, " +
+						"dealing (R1 %s / R2 %s / R3 %s) projectile damage in a %s block sphere when it contacts " +
+						"a mob or a wall. Damage increases by %s%% per block travelled, up to a maximum of +%s%%. " +
+						"The firework is affected by your Projectile Speed. Cooldown: %ss.",
+					DAMAGE_VALLEY,
+					DAMAGE_ISLES,
+					DAMAGE_RING,
+					RADIUS,
+					StringUtils.multiplierToPercentage(DAMAGE_INCREASE_PER_BLOCK),
+					StringUtils.multiplierToPercentage(DAMAGE_INCREASE_PER_BLOCK * DAMAGE_INCREASE_MAX_DISTANCE),
+					StringUtils.ticksToSeconds(COOLDOWN)
+				),
+				String.format("The firework moves twice as fast. " +
+						"If an enemy is directly hit, it takes %sx as much damage.",
+					LEVEL_2_DIRECT_HIT_MULTIPLIER),
+				String.format("A firework show is set up at the explosion location, dealing %s%% " +
+						"of the initial (non-distance scaled) blast's damage %s times in the same radius.",
+					StringUtils.multiplierToPercentage(ENHANCEMENT_DAMAGE),
+					ENHANCEMENT_FIREWORKS
+				)
+			)
 			.simpleDescription("Placeholder.")
 			.cooldown(CHARM_COOLDOWN, COOLDOWN)
 			.addTrigger(new AbilityTriggerInfo<>("cast", "cast", FireworkBlastOverworld::cast, new AbilityTrigger(AbilityTrigger.Key.DROP).sneaking(false), AbilityTriggerInfo.HOLDING_PROJECTILE_WEAPON_RESTRICTION))
@@ -140,7 +154,7 @@ public class FireworkBlastOverworld extends Ability {
 						if (isEnhanced()) {
 							new BukkitRunnable() {
 								int mFireworks = 0;
-								int mMaxFireworks = ENHANCEMENT_FIREWORKS + (int) CharmManager.getLevel(mPlayer, CHARM_ENHANCEMENT_FIREWORKS);
+								final int mMaxFireworks = ENHANCEMENT_FIREWORKS + (int) CharmManager.getLevel(mPlayer, CHARM_ENHANCEMENT_FIREWORKS);
 
 								@Override
 								public void run(){
@@ -191,9 +205,7 @@ public class FireworkBlastOverworld extends Ability {
 				double mult = (fireworkShowStatus == FireworkShowStatus.NONE)
 					? (1 + Math.min(dist, mDamageIncreaseMaxDistance) * mDamagePerBlock)
 					: (ENHANCEMENT_DAMAGE + CharmManager.getLevelPercentDecimal(mPlayer, CHARM_ENHANCEMENT_DAMAGE));
-				double baseDamage = ServerProperties.getAbilityEnhancementsEnabled(mPlayer) ? mRingDamage :
-					ServerProperties.getClassSpecializationsEnabled(mPlayer) ? DAMAGE_ISLES :
-						DAMAGE_VALLEY;
+				double baseDamage = PlayerUtils.getDifferentValuePerRegion(mPlayer, DAMAGE_VALLEY, DAMAGE_ISLES, mRingDamage);
 				double damage = baseDamage * mult;
 
 				// find directly hit mob for lv2

@@ -762,4 +762,7 @@ public class PlayerUtils {
 		return player.isDead() || Plugin.getInstance().mEffectManager.hasEffect(player, RespawnStasis.class);
 	}
 
+	public static double getDifferentValuePerRegion(Player player, double valley, double isles, double ring) {
+		return ServerProperties.getAbilityEnhancementsEnabled(player) ? ring : ServerProperties.getClassSpecializationsEnabled(player) ? isles : valley;
+	}
 }
