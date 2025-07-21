@@ -100,6 +100,7 @@ public enum ClassAbility {
 	AGILITY("Agility"),
 
 	// Bombardier
+	MUNITIONS("Munitions"),
 	WIND_BOMB("Wind Bomb"),
 	GRAVITY_BOMB_OVERWORLD("Gravity Bomb"),
 	RENDING_RAZOR("Rending Razor"),

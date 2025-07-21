@@ -80,6 +80,9 @@ import com.playmonumenta.plugins.abilities._unused.HuntingCompanion;
 import com.playmonumenta.plugins.abilities._unused.SwiftCuts;
 import com.playmonumenta.plugins.abilities._unused.Swiftness;
 import com.playmonumenta.plugins.abilities._unused.Versatile;
+import com.playmonumenta.plugins.abilities.scout.bombardier.GravityBombOverworld;
+import com.playmonumenta.plugins.abilities.scout.bombardier.Munitions;
+import com.playmonumenta.plugins.abilities.scout.bombardier.RendingRazor;
 import com.playmonumenta.plugins.abilities.scout.bombardier.WindBomb;
 import com.playmonumenta.plugins.abilities.scout.hunter.PinningShot;
 import com.playmonumenta.plugins.abilities._unused.PredatorStrike;
@@ -284,7 +287,6 @@ public class AbilityManager {
 			Versatile.INFO,
 			SwiftCuts.INFO,
 			Sharpshooter.INFO,
-			WindBomb.INFO,
 			ScrapshotOverworld.INFO,
 			FireworkBlastOverworld.INFO,
 
@@ -372,9 +374,12 @@ public class AbilityManager {
 			CoupDeGrace.INFO,
 
 			//********** SCOUT **********//
-			// RANGER
-			TacticalManeuver.INFO,
-			WhirlingBlade.INFO,
+
+			// BOMBARDIER
+			Munitions.INFO,
+			WindBomb.INFO,
+			GravityBombOverworld.INFO,
+			RendingRazor.INFO,
 
 			// HUNTER
 			PinningShot.INFO,
@@ -382,6 +387,10 @@ public class AbilityManager {
 			PredatorStrike.INFO,
 
 			//********** MELEESCOUT **********//
+
+			// RANGER
+			TacticalManeuver.INFO,
+			WhirlingBlade.INFO,
 
 			//********** WARRIOR **********//
 			// BERSERKER

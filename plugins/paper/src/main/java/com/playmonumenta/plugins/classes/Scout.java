@@ -6,6 +6,9 @@ import com.playmonumenta.plugins.abilities.scout.*;
 import com.playmonumenta.plugins.abilities._unused.HuntingCompanion;
 import com.playmonumenta.plugins.abilities._unused.Swiftness;
 import com.playmonumenta.plugins.abilities._unused.Versatile;
+import com.playmonumenta.plugins.abilities.scout.bombardier.GravityBombOverworld;
+import com.playmonumenta.plugins.abilities.scout.bombardier.Munitions;
+import com.playmonumenta.plugins.abilities.scout.bombardier.RendingRazor;
 import com.playmonumenta.plugins.abilities.scout.bombardier.WindBomb;
 import com.playmonumenta.plugins.abilities.scout.hunter.PinningShot;
 import com.playmonumenta.plugins.abilities._unused.PredatorStrike;
@@ -40,8 +43,8 @@ public class Scout extends PlayerClass {
 		mClassPassiveName = "Versatile";
 
 		mSpecOne.mAbilities.add(WindBomb.INFO);
-		mSpecOne.mAbilities.add(PlaceholderAbility.INFO); // gbomb
-		mSpecOne.mAbilities.add(PlaceholderAbility.INFO); // razor
+		mSpecOne.mAbilities.add(GravityBombOverworld.INFO); // gbomb
+		mSpecOne.mAbilities.add(RendingRazor.INFO); // razor
 		mSpecOne.mSpecQuestScoreboard = "Quest103";
 		mSpecOne.mSpecialization = BOMBARDIER_SPEC_ID;
 		mSpecOne.mSpecName = "Bombardier";
@@ -60,10 +63,14 @@ public class Scout extends PlayerClass {
 		mTriggerOrder = ImmutableList.of(
 			EagleEye.INFO,
 			Swiftness.INFO,
-			WindBomb.INFO,
 			HuntingCompanion.INFO, // after wind bomb
 			ScrapshotOverworld.INFO,
 			FireworkBlastOverworld.INFO,
+
+			Munitions.INFO,
+			WindBomb.INFO,
+			GravityBombOverworld.INFO,
+			RendingRazor.INFO,
 
 			PredatorStrike.INFO,
 

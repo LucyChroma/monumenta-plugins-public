@@ -3,8 +3,6 @@ package com.playmonumenta.plugins.abilities.scout.bombardier;
 import com.playmonumenta.plugins.Plugin;
 import com.playmonumenta.plugins.abilities.Ability;
 import com.playmonumenta.plugins.abilities.AbilityInfo;
-import com.playmonumenta.plugins.abilities.AbilityTrigger;
-import com.playmonumenta.plugins.abilities.AbilityTriggerInfo;
 import com.playmonumenta.plugins.classes.ClassAbility;
 import com.playmonumenta.plugins.cosmetics.skills.CosmeticSkills;
 import com.playmonumenta.plugins.cosmetics.skills.scout.WindBombCS;
@@ -85,9 +83,9 @@ public class WindBomb extends Ability {
 					(int) (DAMAGE_FRACTION_2 * 100), COOLDOWN_2 / 20, (int) (MIDAIR_DAMAGE_BONUS * 100)),
 				String.format("On impact, generate a vortex that pulls mobs within %s blocks toward the center for %d seconds.", (int) PULL_RADIUS, PULL_DURATION / 20))
 			.simpleDescription("Throw a bomb that damages and launches mobs up in the air, weakening them.")
-			.cooldown(COOLDOWN_1, COOLDOWN_2, CHARM_COOLDOWN)
-			.addTrigger(new AbilityTriggerInfo<>("cast", "cast", WindBomb::cast, new AbilityTrigger(AbilityTrigger.Key.SWAP).sneaking(true)
-				.keyOptions(AbilityTrigger.KeyOptions.REQUIRE_PROJECTILE_WEAPON)))
+//			.cooldown(COOLDOWN_1, COOLDOWN_2, CHARM_COOLDOWN)
+//			.addTrigger(new AbilityTriggerInfo<>("cast", "cast", WindBomb::cast, new AbilityTrigger(AbilityTrigger.Key.SWAP).sneaking(true)
+//				.keyOptions(AbilityTrigger.KeyOptions.REQUIRE_PROJECTILE_WEAPON)))
 			.displayItem(Material.TNT);
 
 	private final double mDamageFraction;
