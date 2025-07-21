@@ -4,8 +4,6 @@ import com.playmonumenta.plugins.Constants;
 import com.playmonumenta.plugins.Plugin;
 import com.playmonumenta.plugins.abilities.*;
 import com.playmonumenta.plugins.classes.ClassAbility;
-import com.playmonumenta.plugins.cosmetics.skills.CosmeticSkills;
-import com.playmonumenta.plugins.cosmetics.skills.mage.elementalist.BlizzardCS;
 import com.playmonumenta.plugins.events.DamageEvent;
 import com.playmonumenta.plugins.events.DamageEvent.DamageType;
 import com.playmonumenta.plugins.itemstats.abilities.CharmManager;
@@ -16,7 +14,6 @@ import com.playmonumenta.plugins.utils.*;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Material;
-import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -27,14 +24,8 @@ public class Snowgrave extends Ability implements AbilityWithChargesOrStacks {
 
 	public static final double DAMAGE_1 = 0.4;
 	public static final double DAMAGE_2 = 0.55;
-	public static final int SIZE_1 = 7;
-	public static final int SIZE_2 = 10;
-	public static final double SLOW_MULTIPLIER_1 = 0.25;
-	public static final double SLOW_MULTIPLIER_2 = 0.3;
 	public static final int TICK_DELAY = 1;
-	public static final int SLOW_INTERVAL = (int) (0.5 * Constants.TICKS_PER_SECOND);
 	public static final int DURATION_TICKS = 3 * Constants.TICKS_PER_SECOND;
-	public static final int SLOW_TICKS = 5 * Constants.TICKS_PER_SECOND;
 	public static final int COOLDOWN_TICKS = 30 * Constants.TICKS_PER_SECOND;
 	public static final int STACK_REQUIREMENT = 30;
 	public static final double AREA_DAMAGE_RATIO = 0.4;
@@ -80,8 +71,6 @@ public class Snowgrave extends Ability implements AbilityWithChargesOrStacks {
 	private final double mAreaDamageRatio;
 	private final double mAreaDamageRadius;
 
-	private final BlizzardCS mCosmetic;
-
 	protected int mMaxCharges;
 	protected int mCharges = 0;
 
@@ -89,7 +78,6 @@ public class Snowgrave extends Ability implements AbilityWithChargesOrStacks {
 		super(plugin, player, INFO);
 		mLevelDamage = (float) CharmManager.calculateFlatAndPercentValue(player, CHARM_DAMAGE, isLevelOne() ? DAMAGE_1 : DAMAGE_2);
 		mDuration = CharmManager.getDuration(mPlayer, CHARM_DURATION, DURATION_TICKS);
-		mCosmetic = CosmeticSkills.getPlayerCosmeticSkill(player, new BlizzardCS());
 		mCharges = getCharges();
 		mMaxCharges = STACK_REQUIREMENT + (int) CharmManager.getLevel(player, CHARM_STACK_REQUIREMENT);
 		mTickDelay = (int) CharmManager.calculateFlatAndPercentValue(player, CHARM_TICK_DELAY, TICK_DELAY);
