@@ -28,7 +28,7 @@ public class Scout extends PlayerClass {
 		mAbilities.add(Sharpshooter.INFO);
 		mAbilities.add(PlaceholderAbility.INFO); // distant visions
 		mAbilities.add(ScrapshotOverworld.INFO); // scrapshot
-		mAbilities.add(PlaceholderAbility.INFO); // firework blast
+		mAbilities.add(FireworkBlastOverworld.INFO); // firework blast
 		mClass = CLASS_ID;
 		mClassName = "Scout";
 		mClassColor = TextColor.fromHexString("#59B4EB");
@@ -63,6 +63,7 @@ public class Scout extends PlayerClass {
 			WindBomb.INFO,
 			HuntingCompanion.INFO, // after wind bomb
 			ScrapshotOverworld.INFO,
+			FireworkBlastOverworld.INFO,
 
 			PredatorStrike.INFO,
 

@@ -274,6 +274,7 @@ public class AbilityManager {
 			EscapeDeath.INFO,
 
 			//********** SCOUT **********//
+			Quickdraw.INFO,
 			Agility.INFO,
 			HuntingCompanion.INFO,
 			Volley.INFO,
@@ -284,6 +285,7 @@ public class AbilityManager {
 			Sharpshooter.INFO,
 			WindBomb.INFO,
 			ScrapshotOverworld.INFO,
+			FireworkBlastOverworld.INFO,
 
 			//********** WARRIOR **********//
 			CounterStrike.INFO,
@@ -369,7 +371,6 @@ public class AbilityManager {
 			// RANGER
 			TacticalManeuver.INFO,
 			WhirlingBlade.INFO,
-			Quickdraw.INFO,
 
 			// HUNTER
 			PinningShot.INFO,

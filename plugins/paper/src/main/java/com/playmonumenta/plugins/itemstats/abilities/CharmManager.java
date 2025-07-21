@@ -67,17 +67,14 @@ import com.playmonumenta.plugins.abilities.rogue.swordsage.BladeDance;
 import com.playmonumenta.plugins.abilities.rogue.swordsage.DeadlyRonde;
 import com.playmonumenta.plugins.abilities.rogue.swordsage.WindWalk;
 import com.playmonumenta.plugins.abilities._unused.Agility;
-import com.playmonumenta.plugins.abilities.scout.EagleEye;
+import com.playmonumenta.plugins.abilities.scout.*;
 import com.playmonumenta.plugins.abilities._unused.HuntingCompanion;
-import com.playmonumenta.plugins.abilities.scout.Sharpshooter;
 import com.playmonumenta.plugins.abilities._unused.SwiftCuts;
 import com.playmonumenta.plugins.abilities._unused.Swiftness;
-import com.playmonumenta.plugins.abilities.scout.Volley;
 import com.playmonumenta.plugins.abilities.scout.bombardier.WindBomb;
 import com.playmonumenta.plugins.abilities.scout.hunter.PinningShot;
 import com.playmonumenta.plugins.abilities._unused.PredatorStrike;
 import com.playmonumenta.plugins.abilities.scout.hunter.SplitArrow;
-import com.playmonumenta.plugins.abilities.scout.Quickdraw;
 import com.playmonumenta.plugins.abilities.meleescout.ranger.TacticalManeuver;
 import com.playmonumenta.plugins.abilities.meleescout.ranger.WhirlingBlade;
 import com.playmonumenta.plugins.abilities.shaman.ChainLightning;
@@ -911,6 +908,20 @@ public class CharmManager {
 			WhirlingBlade.CHARM_WEAKEN_DURATION,
 			WhirlingBlade.CHARM_SLOWNESS_DURATION,
 			WhirlingBlade.CHARM_STUN_DURATION,
+			ScrapshotOverworld.CHARM_COOLDOWN,
+			ScrapshotOverworld.CHARM_DAMAGE,
+			ScrapshotOverworld.CHARM_RANGE,
+			ScrapshotOverworld.CHARM_SHRAPNEL_CONE_ANGLE,
+			ScrapshotOverworld.CHARM_SHRAPNEL_RANGE,
+			ScrapshotOverworld.CHARM_RECOIL_VELOCITY,
+			FireworkBlastOverworld.CHARM_COOLDOWN,
+			FireworkBlastOverworld.CHARM_DAMAGE,
+			FireworkBlastOverworld.CHARM_RADIUS,
+			FireworkBlastOverworld.CHARM_DAMAGE_PER_BLOCK,
+			FireworkBlastOverworld.CHARM_DAMAGE_INCREASE_MAX_DISTANCE,
+			FireworkBlastOverworld.CHARM_FLIGHT_SPEED,
+			FireworkBlastOverworld.CHARM_ENHANCEMENT_FIREWORKS,
+			FireworkBlastOverworld.CHARM_ENHANCEMENT_DAMAGE,
 
 			//Shaman
 			TotemicEmpowerment.CHARM_SPEED,
