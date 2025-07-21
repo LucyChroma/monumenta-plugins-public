@@ -10,6 +10,7 @@ import com.playmonumenta.plugins.abilities.mage.arcanist.AstralOmen;
 import com.playmonumenta.plugins.abilities.mage.arcanist.CosmicMoonblade;
 import com.playmonumenta.plugins.abilities.mage.arcanist.SagesInsight;
 import com.playmonumenta.plugins.abilities.mage.elementalist.Blizzard;
+import com.playmonumenta.plugins.abilities.mage.elementalist.Snowgrave;
 import com.playmonumenta.plugins.abilities.mage.elementalist.Starfall;
 import com.playmonumenta.plugins.abilities.warrior.berserker.MeteorSlam;
 import org.jetbrains.annotations.Nullable;
@@ -43,6 +44,7 @@ public enum ClassAbility {
 	ELEMENTAL_SPIRIT_FIRE("Fire Elemental Spirit"),
 	ELEMENTAL_SPIRIT_ICE("Ice Elemental Spirit"),
 	STARFALL(Starfall.NAME),
+	SNOWGRAVE(Snowgrave.NAME),
 
 	// [Rogue]
 	ADVANCING_SHADOWS("Advancing Shadows"),

@@ -45,10 +45,7 @@ import com.playmonumenta.plugins.abilities.mage.ThunderStep;
 import com.playmonumenta.plugins.abilities.mage.arcanist.AstralOmen;
 import com.playmonumenta.plugins.abilities.mage.arcanist.CosmicMoonblade;
 import com.playmonumenta.plugins.abilities.mage.arcanist.SagesInsight;
-import com.playmonumenta.plugins.abilities.mage.elementalist.Blizzard;
-import com.playmonumenta.plugins.abilities.mage.elementalist.ElementalSpiritFire;
-import com.playmonumenta.plugins.abilities.mage.elementalist.ElementalSpiritIce;
-import com.playmonumenta.plugins.abilities.mage.elementalist.Starfall;
+import com.playmonumenta.plugins.abilities.mage.elementalist.*;
 import com.playmonumenta.plugins.abilities.other.AttribaAttackDamage;
 import com.playmonumenta.plugins.abilities.other.AttribaAttackSpeed;
 import com.playmonumenta.plugins.abilities.other.AttribaKnockbackResistance;
@@ -350,6 +347,7 @@ public class AbilityManager {
 			ElementalSpiritIce.INFO,
 			Blizzard.INFO,
 			Starfall.INFO,
+			Snowgrave.INFO,
 
 			// ARCANIST
 			CosmicMoonblade.INFO,

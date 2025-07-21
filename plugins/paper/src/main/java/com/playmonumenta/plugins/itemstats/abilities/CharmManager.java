@@ -48,10 +48,7 @@ import com.playmonumenta.plugins.abilities.mage.ThunderStep;
 import com.playmonumenta.plugins.abilities.mage.arcanist.AstralOmen;
 import com.playmonumenta.plugins.abilities.mage.arcanist.CosmicMoonblade;
 import com.playmonumenta.plugins.abilities.mage.arcanist.SagesInsight;
-import com.playmonumenta.plugins.abilities.mage.elementalist.Blizzard;
-import com.playmonumenta.plugins.abilities.mage.elementalist.ElementalSpiritFire;
-import com.playmonumenta.plugins.abilities.mage.elementalist.ElementalSpiritIce;
-import com.playmonumenta.plugins.abilities.mage.elementalist.Starfall;
+import com.playmonumenta.plugins.abilities.mage.elementalist.*;
 import com.playmonumenta.plugins.abilities.rogue.AdvancingShadows;
 import com.playmonumenta.plugins.abilities.rogue.ByMyBlade;
 import com.playmonumenta.plugins.abilities.rogue.DaggerThrow;
@@ -347,11 +344,19 @@ public class CharmManager {
 			SagesInsight.CHARM_ABILITY,
 			SagesInsight.CHARM_DECAY,
 			SagesInsight.CHARM_STACKS,
-			Blizzard.CHARM_COOLDOWN,
-			Blizzard.CHARM_SLOW,
-			Blizzard.CHARM_DURATION,
-			Blizzard.CHARM_RANGE,
-			Blizzard.CHARM_DAMAGE,
+//			Blizzard.CHARM_COOLDOWN,
+//			Blizzard.CHARM_SLOW,
+//			Blizzard.CHARM_DURATION,
+//			Blizzard.CHARM_RANGE,
+//			Blizzard.CHARM_DAMAGE,
+			Snowgrave.CHARM_DAMAGE,
+			Snowgrave.CHARM_TICK_DELAY,
+			Snowgrave.CHARM_RANGE,
+			Snowgrave.CHARM_DURATION,
+			Snowgrave.CHARM_SLOW,
+			Snowgrave.CHARM_STACK_REQUIREMENT,
+			Snowgrave.CHARM_AREA_DAMAGE_RATIO,
+			Snowgrave.CHARM_AREA_DAMAGE_RADIUS,
 			Starfall.CHARM_COOLDOWN,
 			Starfall.CHARM_DAMAGE,
 			Starfall.CHARM_RANGE,
@@ -1029,6 +1034,8 @@ public class CharmManager {
 			CosmicMoonblade.CHARM_COOLDOWN,
 			SagesInsight.CHARM_STACKS,
 			Blizzard.CHARM_COOLDOWN,
+			Snowgrave.CHARM_STACK_REQUIREMENT,
+			Snowgrave.CHARM_TICK_DELAY,
 			Starfall.CHARM_COOLDOWN,
 			ElementalSpiritFire.CHARM_COOLDOWN,
 			CelestialBlessing.CHARM_COOLDOWN,

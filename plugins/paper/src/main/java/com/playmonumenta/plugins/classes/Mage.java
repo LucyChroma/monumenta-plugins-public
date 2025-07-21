@@ -15,6 +15,7 @@ import com.playmonumenta.plugins.abilities.mage.arcanist.CosmicMoonblade;
 import com.playmonumenta.plugins.abilities.mage.arcanist.SagesInsight;
 import com.playmonumenta.plugins.abilities.mage.elementalist.Blizzard;
 import com.playmonumenta.plugins.abilities.mage.elementalist.ElementalSpiritFire;
+import com.playmonumenta.plugins.abilities.mage.elementalist.Snowgrave;
 import com.playmonumenta.plugins.abilities.mage.elementalist.Starfall;
 import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.Material;
@@ -52,7 +53,7 @@ public class Mage extends PlayerClass {
 		mSpecOne.mDisplayItem = Material.DRAGON_BREATH;
 		mSpecOne.mDescription = "Arcanists are mages that specialize at controlling their skill cooldowns and getting up close.";
 
-		mSpecTwo.mAbilities.add(Blizzard.INFO);
+		mSpecTwo.mAbilities.add(Snowgrave.INFO);
 		mSpecTwo.mAbilities.add(ElementalSpiritFire.INFO);
 		mSpecTwo.mAbilities.add(Starfall.INFO);
 		mSpecTwo.mSpecQuestScoreboard = "Quest103b";
@@ -64,7 +65,7 @@ public class Mage extends PlayerClass {
 		mTriggerOrder = ImmutableList.of(
 			CosmicMoonblade.INFO,
 
-			Blizzard.INFO,
+			Snowgrave.INFO,
 			Starfall.INFO,
 
 			FrostNova.INFO,
