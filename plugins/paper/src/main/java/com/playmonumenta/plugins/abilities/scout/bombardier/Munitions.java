@@ -14,6 +14,7 @@ import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.Nullable;
 
 public class Munitions extends MultipleChargeAbility {
 
@@ -21,7 +22,7 @@ public class Munitions extends MultipleChargeAbility {
 		WIND_BOMB(WindBomb.class),
 		GRAVITY_BOMB(GravityBombOverworld.class),
 		RENDING_RAZOR(RendingRazor.class),
-		NONE(null);
+		NONE(PlaceholderAbility.class);
 
 		final Class<? extends Ability> mSkillClass;
 
@@ -29,6 +30,7 @@ public class Munitions extends MultipleChargeAbility {
 			mSkillClass = skillClass;
 		}
 
+		@SuppressWarnings("NullAway") // a null skill is never casted
 		public void castSkill(Munitions munitions){
 			if(this == NONE) return;
 			if(this == WIND_BOMB) munitions.mWindBomb.cast();
@@ -55,7 +57,7 @@ public class Munitions extends MultipleChargeAbility {
 			};
 		}
 
-		public Ability getSkillInstance(Munitions munitions){
+		public @Nullable Ability getSkillInstance(Munitions munitions){
 			return switch(this){
 				case WIND_BOMB -> munitions.mWindBomb;
 				case GRAVITY_BOMB -> munitions.mGravityBomb;
@@ -93,9 +95,9 @@ public class Munitions extends MultipleChargeAbility {
 			.canUse(player -> AbilityUtils.getSpecNum(player) == Scout.BOMBARDIER_SPEC_ID);
 
 	SelectedSkill mSelectedSkill;
-	WindBomb mWindBomb;
-	GravityBombOverworld mGravityBomb;
-	RendingRazor mRendingRazor;
+	@Nullable WindBomb mWindBomb;
+	@Nullable GravityBombOverworld mGravityBomb;
+	@Nullable RendingRazor mRendingRazor;
 
 	public Munitions(Plugin plugin, Player player) {
 		super(plugin, player, INFO);
@@ -103,7 +105,7 @@ public class Munitions extends MultipleChargeAbility {
 		// cooldown system doesnt like it if you try to set something on cooldown with 0 points in the skill
 		// this doesnt need to be cleaned up when the skill is deselected because whether or not you have
 		// the score doesnt actually matter if youre not a bombardier
-		ScoreboardUtils.setScoreboardValue(player, INFO.getScoreboard(), 1);
+		ScoreboardUtils.setScoreboardValue(player, "Munitions", 1);
 
 		mCharges = getTrackedCharges();
 		mMaxCharges = MAX_CHARGES + (int) CharmManager.getLevel(player, CHARM_MAX_CHARGES);

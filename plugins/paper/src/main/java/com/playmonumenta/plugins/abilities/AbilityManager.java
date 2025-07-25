@@ -85,7 +85,7 @@ import com.playmonumenta.plugins.abilities.scout.bombardier.Munitions;
 import com.playmonumenta.plugins.abilities.scout.bombardier.RendingRazor;
 import com.playmonumenta.plugins.abilities.scout.bombardier.WindBomb;
 import com.playmonumenta.plugins.abilities.scout.hunter.PinningShot;
-import com.playmonumenta.plugins.abilities._unused.PredatorStrike;
+import com.playmonumenta.plugins.abilities.scout.hunter.PredatorMissile;
 import com.playmonumenta.plugins.abilities.scout.hunter.SplitArrow;
 import com.playmonumenta.plugins.abilities.meleescout.ranger.TacticalManeuver;
 import com.playmonumenta.plugins.abilities.meleescout.ranger.WhirlingBlade;
@@ -384,7 +384,7 @@ public class AbilityManager {
 			// HUNTER
 			PinningShot.INFO,
 			SplitArrow.INFO,
-			PredatorStrike.INFO,
+			PredatorMissile.INFO,
 
 			//********** MELEESCOUT **********//
 

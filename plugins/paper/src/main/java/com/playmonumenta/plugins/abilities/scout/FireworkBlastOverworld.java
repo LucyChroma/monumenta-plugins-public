@@ -21,6 +21,7 @@ import org.bukkit.inventory.meta.FireworkMeta;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.BoundingBox;
 import org.bukkit.util.Vector;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
@@ -148,7 +149,7 @@ public class FireworkBlastOverworld extends Ability {
 					}
 
 					Hitbox hitbox = new Hitbox.SphereHitbox(mLoc, 0.5);
-					if (!hitbox.getHitMobs().isEmpty() || LocationUtils.collidesWithBlocks(BoundingBox.of(mLoc.clone().add(0.25, 0.25, 0.25), mLoc.clone().add(-0.5, -0.25, -0.25)), mLoc.getWorld(), false)) {
+					if (!hitbox.getHitMobs().isEmpty() || LocationUtils.collidesWithBlocks(BoundingBox.of(mLoc.clone().add(0.25, 0.25, 0.25), mLoc.clone().add(-0.25, -0.25, -0.25)), mLoc.getWorld(), false)) {
 						explode(mLoc, extraFireworks, hitbox.getHitMobs(), FireworkShowStatus.NONE);
 
 						if (isEnhanced()) {
@@ -200,7 +201,7 @@ public class FireworkBlastOverworld extends Ability {
 				mTicks++;
 			}
 
-			private void explode(Location loc, int extraFireworks, List<LivingEntity> hitMobs, FireworkShowStatus fireworkShowStatus) {
+			private void explode(Location loc, int extraFireworks, @Nullable List<LivingEntity> hitMobs, FireworkShowStatus fireworkShowStatus) {
 				double dist = mStartLoc.distance(loc);
 				double mult = (fireworkShowStatus == FireworkShowStatus.NONE)
 					? (1 + Math.min(dist, mDamageIncreaseMaxDistance) * mDamagePerBlock)
