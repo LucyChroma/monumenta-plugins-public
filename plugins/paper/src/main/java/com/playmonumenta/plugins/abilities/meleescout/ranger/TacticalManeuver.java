@@ -37,9 +37,11 @@ public class TacticalManeuver extends MultipleChargeAbility {
 	private static final int TACTICAL_MANEUVER_1_COOLDOWN = 20 * 10;
 	private static final int TACTICAL_MANEUVER_2_COOLDOWN = 20 * 8;
 	private static final int TACTICAL_MANEUVER_RADIUS = 3;
-	private static final int TACTICAL_DASH_DAMAGE = 14;
+	private static final int TACTICAL_DASH_DAMAGE_ISLES = 14;
+	private static final int TACTICAL_DASH_DAMAGE_RING = 21;
 	private static final int TACTICAL_DASH_STUN_DURATION = 20 * 1;
-	private static final int TACTICAL_LEAP_DAMAGE = 8;
+	private static final int TACTICAL_LEAP_DAMAGE_ISLES = 8;
+	private static final int TACTICAL_LEAP_DAMAGE_RING = 12;
 	private static final float TACTICAL_LEAP_KNOCKBACK_SPEED = 0.5f;
 
 	public static final String CHARM_CHARGES = "Tactical Maneuver Charge";
@@ -58,7 +60,7 @@ public class TacticalManeuver extends MultipleChargeAbility {
 				String.format("Press the drop key while not sneaking to dash forward, dealing %d damage to the first enemy hit, and stunning it and all enemies in a %d block radius for %d second. " +
 					              "Press the drop key while sneaking to leap backwards, dealing %d damage to enemies in a %d block radius and knocking them away. " +
 					              "Cooldown: %ds. Charges: %d.",
-					TACTICAL_DASH_DAMAGE, TACTICAL_MANEUVER_RADIUS, TACTICAL_DASH_STUN_DURATION / 20, TACTICAL_LEAP_DAMAGE, TACTICAL_MANEUVER_RADIUS, TACTICAL_MANEUVER_1_COOLDOWN / 20, TACTICAL_MANEUVER_1_MAX_CHARGES),
+					TACTICAL_DASH_DAMAGE_ISLES, TACTICAL_MANEUVER_RADIUS, TACTICAL_DASH_STUN_DURATION / 20, TACTICAL_LEAP_DAMAGE_ISLES, TACTICAL_MANEUVER_RADIUS, TACTICAL_MANEUVER_1_COOLDOWN / 20, TACTICAL_MANEUVER_1_MAX_CHARGES),
 				String.format("Cooldown: %ds. Charges: %d.", TACTICAL_MANEUVER_2_COOLDOWN / 20, TACTICAL_MANEUVER_2_MAX_CHARGES))
 			.simpleDescription("Dash forward and stun nearby mobs. While sneaking, dash backwards and knock away nearby mobs.")
 			.cooldown(TACTICAL_MANEUVER_1_COOLDOWN, TACTICAL_MANEUVER_2_COOLDOWN, CHARM_COOLDOWN)
@@ -138,7 +140,8 @@ public class TacticalManeuver extends MultipleChargeAbility {
 
 					LivingEntity le = EntityUtils.getNearestMob(mPlayer.getLocation(), 2);
 					if (le != null) {
-						DamageUtils.damage(mPlayer, le, DamageType.MELEE_SKILL, CharmManager.calculateFlatAndPercentValue(mPlayer, CHARM_DAMAGE, TACTICAL_DASH_DAMAGE), mInfo.getLinkedSpell(), true);
+						double damage = CharmManager.calculateFlatAndPercentValue(mPlayer, CHARM_DAMAGE, PlayerUtils.getDifferentValuePerRegion(mPlayer, 0, TACTICAL_DASH_DAMAGE_ISLES, TACTICAL_DASH_DAMAGE_RING));
+						DamageUtils.damage(mPlayer, le, DamageType.MELEE_SKILL, damage, mInfo.getLinkedSpell(), true);
 						int duration = CharmManager.getDuration(mPlayer, CHARM_DURATION, TACTICAL_DASH_STUN_DURATION);
 						for (LivingEntity e : EntityUtils.getNearbyMobs(le.getLocation(), radius)) {
 							EntityUtils.applyStun(mPlugin, duration, e);
@@ -153,7 +156,8 @@ public class TacticalManeuver extends MultipleChargeAbility {
 			}.runTaskTimer(mPlugin, 0, 1));
 		} else {
 			for (LivingEntity le : EntityUtils.getNearbyMobs(mPlayer.getLocation(), radius, mPlayer)) {
-				DamageUtils.damage(mPlayer, le, DamageType.MELEE_SKILL, CharmManager.calculateFlatAndPercentValue(mPlayer, CHARM_DAMAGE, TACTICAL_LEAP_DAMAGE), mInfo.getLinkedSpell(), true);
+				double damage = CharmManager.calculateFlatAndPercentValue(mPlayer, CHARM_DAMAGE, PlayerUtils.getDifferentValuePerRegion(mPlayer, 0, TACTICAL_LEAP_DAMAGE_ISLES, TACTICAL_LEAP_DAMAGE_RING));
+				DamageUtils.damage(mPlayer, le, DamageType.MELEE_SKILL, CharmManager.calculateFlatAndPercentValue(mPlayer, CHARM_DAMAGE, damage), mInfo.getLinkedSpell(), true);
 				MovementUtils.knockAway(mPlayer, le, TACTICAL_LEAP_KNOCKBACK_SPEED);
 			}
 

@@ -17,6 +17,8 @@ import com.playmonumenta.plugins.utils.MovementUtils;
 import java.util.Iterator;
 import java.util.List;
 import javax.annotation.Nullable;
+
+import com.playmonumenta.plugins.utils.PlayerUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -30,8 +32,10 @@ import org.bukkit.util.Vector;
 
 public class WhirlingBlade extends MultipleChargeAbility {
 
-	private static final int BLADE_1_DAMAGE = 9;
-	private static final int BLADE_2_DAMAGE = 18;
+	private static final int BLADE_1_DAMAGE_ISLES = 10;
+	private static final int BLADE_2_DAMAGE_ISLES = 18;
+	private static final int BLADE_1_DAMAGE_RING = 15;
+	private static final int BLADE_2_DAMAGE_RING = 27;
 	private static final float BLADE_KNOCKBACK = 0.4f;
 	private static final double BLADE_WEAKEN = 0.3;
 	private static final double BLADE_SLOWNESS = 0.2;
@@ -61,9 +65,11 @@ public class WhirlingBlade extends MultipleChargeAbility {
 			.hotbarName("Whrl")
 			.descriptions(
 				"Swap hands while holding a melee weapon to throw a whirling blade that circles around you, " +
-					"knocking back and dealing " + BLADE_1_DAMAGE + " melee damage to enemies it hits within a radius of " + (THROW_RADIUS + BLADE_RADIUS) + " and inflicts " + (int) (100 * BLADE_WEAKEN) + "% weakness and " + (int) (100 * BLADE_SLOWNESS) + "% slowness for " + BLADE_1_DURATION / 20 + "s. " +
+					"knocking back and dealing (R2 " + BLADE_1_DAMAGE_ISLES + " / R3 " + BLADE_1_DAMAGE_RING +
+					") melee damage to enemies it hits within a radius of " + (THROW_RADIUS + BLADE_RADIUS) + " and inflicts " + (int) (100 * BLADE_WEAKEN) + "% weakness and " + (int) (100 * BLADE_SLOWNESS) + "% slowness for " + BLADE_1_DURATION / 20 + "s. " +
 					"Cooldown: " + BLADE_COOLDOWN / 20 + "s. Charges: " + BLADE_MAX_CHARGES + ".",
-				"The damage is increased to " + BLADE_2_DAMAGE + " and also stun for " + BLADE_2_DURATION / 20.0 + "s.")
+				"The damage is increased to (R2 " + BLADE_2_DAMAGE_ISLES + " / R3 " + BLADE_2_DAMAGE_RING +
+					") and also stuns for " + BLADE_2_DURATION / 20.0 + "s.")
 			.simpleDescription("Damage, weaken, and knock nearby mobs back.")
 			.cooldown(BLADE_COOLDOWN, CHARM_COOLDOWN)
 			.addTrigger(new AbilityTriggerInfo<>("cast", "cast", WhirlingBlade::cast, new AbilityTrigger(AbilityTrigger.Key.SWAP)
@@ -80,7 +86,8 @@ public class WhirlingBlade extends MultipleChargeAbility {
 
 	public WhirlingBlade(Plugin plugin, Player player) {
 		super(plugin, player, INFO);
-		mDamage = CharmManager.calculateFlatAndPercentValue(mPlayer, CHARM_DAMAGE, isLevelOne() ? BLADE_1_DAMAGE : BLADE_2_DAMAGE);
+		double tempDamage = PlayerUtils.getDifferentValuePerRegion(player, 0, isLevelOne() ? BLADE_1_DAMAGE_ISLES : BLADE_2_DAMAGE_ISLES, isLevelOne() ? BLADE_1_DAMAGE_RING : BLADE_2_DAMAGE_RING);
+		mDamage = CharmManager.calculateFlatAndPercentValue(mPlayer, CHARM_DAMAGE, tempDamage);
 		mKnockback = (float) CharmManager.calculateFlatAndPercentValue(mPlayer, CHARM_KNOCKBACK, BLADE_KNOCKBACK);
 		mMaxCharges = BLADE_MAX_CHARGES + (int) CharmManager.getLevel(mPlayer, CHARM_CHARGES);
 		mCharges = getTrackedCharges();
