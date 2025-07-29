@@ -9,7 +9,10 @@ import com.playmonumenta.plugins.cosmetics.skills.scout.VolleyCS;
 import com.playmonumenta.plugins.events.DamageEvent;
 import com.playmonumenta.plugins.events.DamageEvent.DamageType;
 import com.playmonumenta.plugins.itemstats.abilities.CharmManager;
+import com.playmonumenta.plugins.itemstats.enums.AttributeType;
+import com.playmonumenta.plugins.itemstats.enums.EnchantmentType;
 import com.playmonumenta.plugins.utils.EntityUtils;
+import com.playmonumenta.plugins.utils.ItemStatUtils;
 import com.playmonumenta.plugins.utils.ItemUtils;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -20,6 +23,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Particle;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.AbstractArrow;
 import org.bukkit.entity.AbstractArrow.PickupStatus;
 import org.bukkit.entity.Entity;
@@ -28,15 +32,16 @@ import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;
 import org.bukkit.entity.ThrowableProjectile;
 import org.bukkit.event.entity.ProjectileLaunchEvent;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 
 public class Volley extends Ability {
 
-	private static final int VOLLEY_COOLDOWN = 15 * 20;
+	private static final int VOLLEY_COOLDOWN = 16 * 20;
 	private static final int VOLLEY_1_ARROW_COUNT = 7;
 	private static final int VOLLEY_2_ARROW_COUNT = 11;
-	private static final double VOLLEY_1_DAMAGE_MULTIPLIER = 1.3;
-	private static final double VOLLEY_2_DAMAGE_MULTIPLIER = 1.5;
+	private static final double VOLLEY_1_DAMAGE_MULTIPLIER = 1;
+	private static final double VOLLEY_2_DAMAGE_MULTIPLIER = 1.2;
 	private static final double ENHANCEMENT_BLEED_POTENCY = 0.1;
 	private static final int ENHANCEMENT_BLEED_DURATION = 4 * 20;
 	public Set<Projectile> mVolley;
@@ -56,11 +61,10 @@ public class Volley extends Ability {
 			.shorthandName("Vly")
 			.descriptions(
 				String.format("When you shoot a projectile while sneaking, you shoot a volley consisting of %d projectiles instead. " +
-					              "Only one arrow is consumed, and each projectile deals %d%% bonus damage. Cooldown: %ds.",
+					              "Only one arrow is consumed. Cooldown: %ds.",
 					VOLLEY_1_ARROW_COUNT,
-					(int) ((VOLLEY_1_DAMAGE_MULTIPLIER - 1) * 100),
 					VOLLEY_COOLDOWN / 20),
-				String.format("Increases the number of projectiles to %d and enhances the damage bonus to %d%%.",
+				String.format("Increases the number of projectiles to %d, and arrows now deal an additional %d%% damage.",
 					VOLLEY_2_ARROW_COUNT,
 					(int) ((VOLLEY_2_DAMAGE_MULTIPLIER - 1) * 100)),
 				String.format("Volley now fires in a 360 degree arc. The projectiles inflict %d%% Bleed for %ds.", (int) (ENHANCEMENT_BLEED_POTENCY * 100), ENHANCEMENT_BLEED_DURATION / 20))
@@ -83,12 +87,38 @@ public class Volley extends Ability {
 	}
 
 	@Override
+	public void putOnCooldown(){
+		putOnModifiedCooldown(mPlayer.getEquipment().getItemInMainHand());
+	}
+
+	private void putOnModifiedCooldown(ItemStack mainhand){
+		int modifiedCooldown = getModifiedCooldown();
+		Material m = mainhand.getType();
+		if(ItemStatUtils.hasEnchantment(mainhand, EnchantmentType.THROWING_KNIFE)) m = Material.SNOWBALL; // functionally a snowball
+		switch (m) {
+			case CROSSBOW -> modifiedCooldown = (int) (modifiedCooldown * (1.25 - 0.25 * mainhand.getEnchantmentLevel(Enchantment.QUICK_CHARGE)));
+			case TRIDENT -> {
+				double throwRate = mPlugin.mItemStatManager.getAttributeAmount(mPlayer, AttributeType.THROW_RATE);
+				modifiedCooldown = (int) (0.5 * modifiedCooldown + modifiedCooldown / throwRate);
+			}
+			case SNOWBALL, EGG, ENDER_PEARL, EXPERIENCE_BOTTLE, FISHING_ROD -> {
+				double throwRate = mPlugin.mItemStatManager.getAttributeAmount(mPlayer, AttributeType.THROW_RATE);
+				modifiedCooldown = (int) (modifiedCooldown / throwRate);
+			}
+			// bow just gets usual cooldown
+		}
+		putOnCooldown(modifiedCooldown);
+	}
+
+	@Override
 	public boolean playerShotProjectileEvent(Projectile projectile) {
 		if (!mPlayer.isSneaking()
 			    || isOnCooldown()
 			    || !EntityUtils.isAbilityTriggeringProjectile(projectile, false)) {
+			mPlayer.sendRawMessage("invalid for volley");
 			return true;
 		}
+		mPlayer.sendRawMessage("valid for volley");
 
 		// Start the cooldown first so we don't cause an infinite loop of Volleys
 		putOnCooldown();
@@ -142,7 +172,7 @@ public class Volley extends Ability {
 	@Override
 	public boolean onDamage(DamageEvent event, LivingEntity enemy) {
 		Entity proj = event.getDamager();
-		if (event.getType() == DamageType.PROJECTILE && mVolley.contains(proj)) {
+		if (event.getType() == DamageType.PROJECTILE && mVolley.contains((Projectile) proj)) {
 			if (notBeenHit(enemy)) {
 				event.updateDamageWithMultiplier(mMultiplier * (1 + CharmManager.getLevelPercentDecimal(mPlayer, CHARM_DAMAGE)));
 				mCosmetic.volleyHit(mPlayer, enemy);

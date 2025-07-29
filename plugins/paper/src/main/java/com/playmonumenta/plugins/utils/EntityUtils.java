@@ -1501,7 +1501,7 @@ public class EntityUtils {
 	public static boolean isAbilityTriggeringProjectile(Projectile proj, boolean requireCritical) {
 		if (proj instanceof AbstractArrow arrow) {
 			return !requireCritical || arrow.isCritical() || arrow instanceof Trident;
-		} else if (proj instanceof Snowball) {
+		} else if (proj instanceof ThrowableProjectile || proj instanceof FishHook) {
 			ItemStatManager.PlayerItemStats projectileItemStats = DamageListener.getProjectileItemStats(proj);
 			return projectileItemStats != null
 					   && projectileItemStats.getMainhandAddStats().get(AttributeType.PROJECTILE_DAMAGE_ADD.getItemStat()) > 0;

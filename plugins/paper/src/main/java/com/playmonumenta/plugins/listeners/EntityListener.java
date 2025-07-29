@@ -35,14 +35,12 @@ import com.playmonumenta.plugins.utils.ScoreboardUtils;
 import com.playmonumenta.plugins.utils.ZoneUtils;
 import com.playmonumenta.plugins.utils.ZoneUtils.ZoneProperty;
 import de.tr7zw.nbtapi.NBTEntity;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.EnumSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Set;
+
+import java.util.*;
+
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
+import org.apache.commons.lang3.tuple.Pair;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
@@ -60,28 +58,8 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockExplodeEvent;
-import org.bukkit.event.entity.AreaEffectCloudApplyEvent;
-import org.bukkit.event.entity.EntityChangeBlockEvent;
-import org.bukkit.event.entity.EntityCombustByEntityEvent;
-import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.entity.*;
 import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
-import org.bukkit.event.entity.EntityDismountEvent;
-import org.bukkit.event.entity.EntityEnterBlockEvent;
-import org.bukkit.event.entity.EntityExplodeEvent;
-import org.bukkit.event.entity.EntityInteractEvent;
-import org.bukkit.event.entity.EntityMountEvent;
-import org.bukkit.event.entity.EntityResurrectEvent;
-import org.bukkit.event.entity.EntitySpawnEvent;
-import org.bukkit.event.entity.EntityTargetLivingEntityEvent;
-import org.bukkit.event.entity.ExplosionPrimeEvent;
-import org.bukkit.event.entity.LingeringPotionSplashEvent;
-import org.bukkit.event.entity.PotionSplashEvent;
-import org.bukkit.event.entity.ProjectileHitEvent;
-import org.bukkit.event.entity.ProjectileLaunchEvent;
-import org.bukkit.event.entity.VillagerAcquireTradeEvent;
-import org.bukkit.event.entity.VillagerCareerChangeEvent;
-import org.bukkit.event.entity.VillagerReplenishTradeEvent;
 import org.bukkit.event.hanging.HangingBreakByEntityEvent;
 import org.bukkit.event.hanging.HangingBreakEvent;
 import org.bukkit.inventory.ItemStack;
@@ -438,6 +416,10 @@ public class EntityListener implements Listener {
 	// Entity Spawn Event.
 	@EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
 	public void entitySpawnEvent(EntitySpawnEvent event) {
+		if(event.getEntity().getEntitySpawnReason() == CreatureSpawnEvent.SpawnReason.EGG) {
+			event.setCancelled(true);
+			return;
+		}
 		Entity entity = event.getEntity();
 		mPlugin.mTrackingManager.addEntity(entity);
 	}
@@ -474,19 +456,23 @@ public class EntityListener implements Listener {
 			}
 
 			// TODO: change the infinity stuff to lowest priority listener, and cancel and re-call the event so that other listeners can catch the proper event
+			final HashMap<EntityType, Pair<Material, Sound>> THROWABLE_MATERIALS = new HashMap<>();
+			THROWABLE_MATERIALS.put(EntityType.SNOWBALL, Pair.of(Material.SNOWBALL, Sound.ENTITY_SNOWBALL_THROW));
+			THROWABLE_MATERIALS.put(EntityType.EGG, Pair.of(Material.EGG, Sound.ENTITY_EGG_THROW));
+			THROWABLE_MATERIALS.put(EntityType.THROWN_EXP_BOTTLE, Pair.of(Material.EXPERIENCE_BOTTLE, Sound.ENTITY_EXPERIENCE_BOTTLE_THROW));
 
-			if (event.getEntityType() == EntityType.SNOWBALL) {
-				Snowball origBall = (Snowball) proj;
+			if (THROWABLE_MATERIALS.containsKey(event.getEntityType())) {
+				ThrowableProjectile origBall = (ThrowableProjectile) proj;
 				ItemStack itemInMainHand = player.getEquipment().getItemInMainHand();
 				if (!mAbilities.playerShotProjectileEvent(player, proj)) {
 					event.setCancelled(true);
 				}
 
 				// Check if the player has an infinity snowball and not throw rate
-				if (itemInMainHand.getType().equals(Material.SNOWBALL)
+				if (itemInMainHand.getType().equals(THROWABLE_MATERIALS.get(event.getEntityType()).getLeft())
 					&& (itemInMainHand.getEnchantmentLevel(Enchantment.ARROW_INFINITE) > 0 || ItemStatUtils.hasEnchantment(itemInMainHand, EnchantmentType.INFINITY))
 					&& ItemStatUtils.getAttributeAmount(itemInMainHand, AttributeType.THROW_RATE, Operation.ADD, Slot.MAINHAND) == 0) {
-					Snowball newBall = (Snowball) origBall.getWorld().spawnEntity(origBall.getLocation(), EntityType.SNOWBALL);
+					ThrowableProjectile newBall = (ThrowableProjectile) origBall.getWorld().spawnEntity(origBall.getLocation(), event.getEntityType());
 
 					// Copy the item's name/etc. so it can be textured
 					newBall.getItem().setItemMeta(itemInMainHand.getItemMeta());
@@ -494,15 +480,18 @@ public class EntityListener implements Listener {
 
 					newBall.setShooter(player);
 					newBall.setVelocity(origBall.getVelocity());
-					player.getLocation().getWorld().playSound(player.getLocation(), Sound.ENTITY_SNOWBALL_THROW, SoundCategory.PLAYERS, 0.4f, 0.5f);
+					player.getLocation().getWorld().playSound(player.getLocation(), THROWABLE_MATERIALS.get(event.getEntityType()).getRight(), SoundCategory.PLAYERS, 0.4f, 0.5f);
 					event.setCancelled(true);
-					clearSnowballProjectile(newBall); // clearing infinity non-weapon snowballs
+					clearEntityLater(newBall); // clearing infinity non-weapon snowballs
 					return;
 				}
-				clearSnowballProjectile(origBall); // clearing plain snowballs
+				clearEntityLater(origBall); // clearing plain snowballs
 			} else if (event.getEntityType() == EntityType.ENDER_PEARL) {
 				EnderPearl origPearl = (EnderPearl) proj;
 				ItemStack itemInMainHand = player.getEquipment().getItemInMainHand();
+				if (!mAbilities.playerShotProjectileEvent(player, proj)) {
+					event.setCancelled(true);
+				}
 
 				// Check if the player has an infinity ender pearl
 				if (itemInMainHand.getType().equals(Material.ENDER_PEARL)
@@ -583,9 +572,13 @@ public class EntityListener implements Listener {
 	// Remove snowballs thrown by the player after 10 seconds.
 	// This is so they don't get stuck in water bubble columns forever.
 	public static void clearSnowballProjectile(Snowball snowball) {
+		clearEntityLater(snowball);
+	}
+
+	public static void clearEntityLater(Entity entity) {
 		Bukkit.getScheduler().runTaskLater(Plugin.getInstance(), () -> {
-			if (snowball.isValid()) {
-				snowball.remove();
+			if (entity.isValid()) {
+				entity.remove();
 			}
 		}, 10 * 20);
 	}

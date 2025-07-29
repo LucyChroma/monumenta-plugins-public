@@ -11,22 +11,19 @@ import com.playmonumenta.plugins.itemstats.enums.AttributeType;
 import com.playmonumenta.plugins.itemstats.enums.EnchantmentType;
 import com.playmonumenta.plugins.listeners.DamageListener;
 import com.playmonumenta.plugins.listeners.EntityListener;
-import com.playmonumenta.plugins.utils.AbilityUtils;
-import com.playmonumenta.plugins.utils.ItemUtils;
-import com.playmonumenta.plugins.utils.NmsUtils;
+import com.playmonumenta.plugins.player.EnderPearlTracker;
+import com.playmonumenta.plugins.utils.*;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.SoundCategory;
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.entity.*;
 import org.bukkit.entity.AbstractArrow.PickupStatus;
-import org.bukkit.entity.EntityType;
-import org.bukkit.entity.Player;
-import org.bukkit.entity.Projectile;
-import org.bukkit.entity.Snowball;
-import org.bukkit.entity.Trident;
 import org.bukkit.event.entity.ProjectileLaunchEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
+
+import java.util.HashMap;
 
 public class ThrowRate implements Attribute {
 
@@ -39,6 +36,8 @@ public class ThrowRate implements Attribute {
 	public AttributeType getAttributeType() {
 		return AttributeType.THROW_RATE;
 	}
+
+	final HashMap<EntityType, Sound> THROWABLE_MATERIALS = new HashMap<>();
 
 	@Override
 	public void onProjectileLaunch(Plugin plugin, Player player, double value, ProjectileLaunchEvent event, Projectile proj) {
@@ -97,10 +96,16 @@ public class ThrowRate implements Attribute {
 			} else {
 				return;
 			}
-		} else if (proj instanceof Snowball oldSnowball) {
+		} else if (proj instanceof ThrowableProjectile throwableProjectile) {
 			if (value > 0) {
+
+				THROWABLE_MATERIALS.put(EntityType.SNOWBALL, Sound.ENTITY_SNOWBALL_THROW);
+				THROWABLE_MATERIALS.put(EntityType.EGG, Sound.ENTITY_EGG_THROW);
+				THROWABLE_MATERIALS.put(EntityType.THROWN_EXP_BOTTLE, Sound.ENTITY_EXPERIENCE_BOTTLE_THROW);
+				THROWABLE_MATERIALS.put(EntityType.ENDER_PEARL, Sound.ENTITY_ENDER_PEARL_THROW);
+
 				// If a snowball made from the volley skill, don't run sound/unbreaking
-				boolean isVolley = AbilityUtils.isVolley(player, oldSnowball);
+				boolean isVolley = AbilityUtils.isVolley(player, throwableProjectile);
 				if (isVolley) {
 					return;
 				}
@@ -109,21 +114,42 @@ public class ThrowRate implements Attribute {
 					return;
 				}
 
-				Snowball snowball = (Snowball) player.getWorld().spawnEntity(proj.getLocation(), EntityType.SNOWBALL);
-				snowball.setShooter(player);
-				snowball.setVelocity(proj.getVelocity());
-				DamageListener.addProjectileItemStats(snowball, player);
-				ItemUtils.setSnowballItem(snowball, oldSnowball.getItem());
+				ThrowableProjectile thrown = (ThrowableProjectile) player.getWorld().spawnEntity(proj.getLocation(), throwableProjectile.getType());
+				thrown.setShooter(player);
+				thrown.setVelocity(proj.getVelocity());
+				DamageListener.addProjectileItemStats(thrown, player);
+				ItemUtils.setSnowballItem(thrown, throwableProjectile.getItem());
 
-				Snowy.transferProjectileMode(oldSnowball, snowball);
+				Snowy.transferProjectileMode(throwableProjectile, thrown);
 
-				player.playSound(player.getLocation(), Sound.ENTITY_SNOWBALL_THROW, SoundCategory.PLAYERS, 0.5f, 0.5f);
-				AbilityManager.getManager().playerShotProjectileEvent(player, snowball);
+				player.playSound(player.getLocation(), THROWABLE_MATERIALS.get(thrown.getType()), SoundCategory.PLAYERS, 0.5f, 0.5f);
+				AbilityManager.getManager().playerShotProjectileEvent(player, thrown);
+				if (thrown.getType() == EntityType.ENDER_PEARL && DamageListener.getProjectileItemStats(thrown).getItemStats().get(EnchantmentType.NO_TELEPORT) == 0
+					&& !ZoneUtils.hasZoneProperty(player.getLocation(), ZoneUtils.ZoneProperty.NO_MOBILITY_ABILITIES) && !ZoneUtils.hasZoneProperty(player.getLocation(), ZoneUtils.ZoneProperty.DISABLE_MAGIC_TESS)) {
+					EnderPearlTracker.startTracking(player, (EnderPearl) thrown);
+				}
 
-				player.setCooldown(Material.SNOWBALL, cooldown);
+				player.setCooldown(throwableProjectile.getItem().getType(), cooldown);
 				event.setCancelled(true);
 				// For clearing weapon snowballs after 10s (to prevent being stuck in bubble columns):
-				EntityListener.clearSnowballProjectile(snowball);
+				EntityListener.clearEntityLater(thrown);
+			} else {
+				return;
+			}
+		} else if (proj instanceof FishHook hook) {
+			if (value > 0) {
+				// If a snowball made from the volley skill, don't run sound/unbreaking
+				boolean isVolley = AbilityUtils.isVolley(player, hook);
+				if (isVolley) {
+					return;
+				}
+				// if event is cancelled (either from TwoHanded or Snowy), do not create projectile
+				if (event.isCancelled()) {
+					return;
+				}
+
+				AbilityManager.getManager().playerShotProjectileEvent(player, hook);
+				player.setCooldown(Material.FISHING_ROD, cooldown);
 			} else {
 				return;
 			}

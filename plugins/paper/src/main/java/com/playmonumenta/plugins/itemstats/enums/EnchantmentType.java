@@ -168,6 +168,8 @@ public enum EnchantmentType {
 	HIDE_INFO(new HideInfo(), false, false, false, false),
 	NO_GLINT(new NoGlint(), false, false, false, false),
 	DELETE_ON_SHATTER(null, "DeleteOnShatter", false, false, false, false),
+	NO_TELEPORT(new NoTeleport(), false, false, false, false),
+	DELETE_BOBBER(new DeleteBobber(), false, false, false, false),
 
 	// Crit Calcs (defaults to value of 1, always active. DO NOT GIVE TO PLAYERS VIA ENCHANT)
 	ANTI_CRIT_SCALING(new AntiCritScaling(), false, false, false, false),

@@ -74,6 +74,7 @@ public class AdrenalineRush extends Ability {
                 ),
 				"Double the effect and length of the Adrenaline enchantment."
             )
+			.scoreboardId("AdrenalineRush")
 			.simpleDescription("Gain speed by fighting and breaking spawners.")
 			.displayItem(Material.SUGAR);
 
@@ -116,7 +117,7 @@ public class AdrenalineRush extends Ability {
 
 			if (isLevelTwo()) {
 				MeleeScout tempMeleeScout = (new MeleeScout());
-				ArrayList<AbilityInfo<? extends Ability>> mAbilityInfos = tempMeleeScout.mAbilities;
+				ArrayList<AbilityInfo<?>> mAbilityInfos = tempMeleeScout.mAbilities;
 				if(AbilityUtils.getSpecNum(mPlayer) == tempMeleeScout.mSpecOne.mSpecialization) {
 					mAbilityInfos.addAll(tempMeleeScout.mSpecOne.mAbilities);
 				} else if (AbilityUtils.getSpecNum(mPlayer) == tempMeleeScout.mSpecTwo.mSpecialization) {

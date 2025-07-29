@@ -26,13 +26,8 @@ import org.bukkit.Particle;
 import org.bukkit.Sound;
 import org.bukkit.SoundCategory;
 import org.bukkit.World;
-import org.bukkit.entity.AbstractArrow;
+import org.bukkit.entity.*;
 import org.bukkit.entity.AbstractArrow.PickupStatus;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.LivingEntity;
-import org.bukkit.entity.Player;
-import org.bukkit.entity.Projectile;
-import org.bukkit.entity.Snowball;
 import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -81,7 +76,7 @@ public class Pyroblast extends DepthsAbility {
 	// Since Snowballs disappear after landing, we need an extra detection for when it hits the ground.
 	@Override
 	public void projectileHitEvent(ProjectileHitEvent event, Projectile proj) {
-		if (proj instanceof Snowball && mPlayerItemStatsMap.containsKey(proj)) {
+		if (proj instanceof ThrowableProjectile && mPlayerItemStatsMap.containsKey(proj)) {
 			explode(proj, proj.getLocation());
 		}
 	}

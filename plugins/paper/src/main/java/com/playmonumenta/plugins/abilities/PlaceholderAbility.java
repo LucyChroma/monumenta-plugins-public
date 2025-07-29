@@ -1,18 +1,8 @@
 package com.playmonumenta.plugins.abilities;
 
 import com.playmonumenta.plugins.Plugin;
-import com.playmonumenta.plugins.classes.ClassAbility;
-import com.playmonumenta.plugins.cosmetics.skills.CosmeticSkills;
-import com.playmonumenta.plugins.cosmetics.skills.rogue.DaggerThrowCS;
-import com.playmonumenta.plugins.events.DamageEvent.DamageType;
-import com.playmonumenta.plugins.itemstats.abilities.CharmManager;
-import com.playmonumenta.plugins.utils.*;
-import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.World;
-import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
-import org.bukkit.util.Vector;
 
 public class PlaceholderAbility extends Ability {
 
@@ -27,6 +17,7 @@ public class PlaceholderAbility extends Ability {
 				String.format("Placeholder ability enhancement. :%s",
 					3))
 			.simpleDescription("Placeholder.")
+			.scoreboardId("PlaceholderAbility")
 			.displayItem(Material.DIRT);
 
 	public PlaceholderAbility(Plugin plugin, Player player) {

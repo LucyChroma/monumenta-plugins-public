@@ -98,6 +98,11 @@ public class AbilityInfo<T extends Ability> {
 	}
 
 	public AbilityInfo<T> scoreboardId(String scoreboardId) {
+		try {
+			ScoreboardUtils.createObjective(scoreboardId, Component.text(scoreboardId));
+		} catch(Exception e) {
+			// already exists, do nothing
+		}
 		mScoreboardId = scoreboardId;
 		return this;
 	}

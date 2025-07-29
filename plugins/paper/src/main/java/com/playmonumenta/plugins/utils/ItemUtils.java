@@ -1182,10 +1182,18 @@ public class ItemUtils {
 		}
 	}
 
+	public static Set<Material> THROWABLES = EnumSet.of(
+		Material.SNOWBALL,
+		Material.EGG,
+		Material.EXPERIENCE_BOTTLE,
+		Material.ENDER_PEARL,
+		Material.SPLASH_POTION,
+		Material.LINGERING_POTION
+	);
 	public static boolean isProjectileWeapon(@Nullable ItemStack itemStack) {
 		if (itemStack != null) {
 			return isBowOrTrident(itemStack)
-				|| (itemStack.getType() == Material.SNOWBALL && ItemStatUtils.getAttributeAmount(itemStack, AttributeType.PROJECTILE_DAMAGE_ADD, Operation.ADD, Slot.MAINHAND) > 0)
+				|| ItemStatUtils.getAttributeAmount(itemStack, AttributeType.THROW_RATE, Operation.ADD, Slot.MAINHAND) > 0
 				|| ItemStatUtils.hasEnchantment(itemStack, EnchantmentType.THROWING_KNIFE);
 		} else {
 			return false;

@@ -42,13 +42,7 @@ import org.bukkit.Material;
 import org.bukkit.Particle;
 import org.bukkit.Sound;
 import org.bukkit.SoundCategory;
-import org.bukkit.entity.AbstractArrow;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.ItemDisplay;
-import org.bukkit.entity.LivingEntity;
-import org.bukkit.entity.Player;
-import org.bukkit.entity.Projectile;
-import org.bukkit.entity.Snowball;
+import org.bukkit.entity.*;
 import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Transformation;
@@ -271,7 +265,7 @@ public class DiscoBall extends DepthsAbility {
 
 	@Override
 	public void projectileHitEvent(ProjectileHitEvent event, Projectile proj) {
-		if (proj instanceof Snowball && mPlayerItemStatsMap.containsKey(proj)) {
+		if (proj instanceof ThrowableProjectile && mPlayerItemStatsMap.containsKey(proj)) {
 			spawnDiscoBall(proj, proj.getLocation());
 		}
 	}

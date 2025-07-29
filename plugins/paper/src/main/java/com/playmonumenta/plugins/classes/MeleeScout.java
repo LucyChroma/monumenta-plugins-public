@@ -3,6 +3,7 @@ package com.playmonumenta.plugins.classes;
 import com.google.common.collect.ImmutableList;
 import com.playmonumenta.plugins.abilities.PlaceholderAbility;
 import com.playmonumenta.plugins.abilities.meleescout.AdrenalineRush;
+import com.playmonumenta.plugins.abilities.meleescout.HasteWithoutWaste;
 import com.playmonumenta.plugins.abilities.meleescout.ranger.TacticalManeuver;
 import com.playmonumenta.plugins.abilities.meleescout.ranger.WhirlingBlade;
 import net.kyori.adventure.text.format.TextColor;
@@ -17,7 +18,7 @@ public class MeleeScout extends PlayerClass {
 
 	public MeleeScout() {
 		mAbilities.add(PlaceholderAbility.INFO); // Reckless Acceleration
-		mAbilities.add(PlaceholderAbility.INFO); // Haste without Waste
+		mAbilities.add(HasteWithoutWaste.INFO); // Haste without Waste
 		mAbilities.add(PlaceholderAbility.INFO); // The Wind Rises
 		mAbilities.add(AdrenalineRush.INFO); // Adrenaline Rush
 		mAbilities.add(PlaceholderAbility.INFO); // Machete Slash

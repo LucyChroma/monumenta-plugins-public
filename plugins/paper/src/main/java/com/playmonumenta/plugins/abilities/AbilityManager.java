@@ -74,7 +74,7 @@ import com.playmonumenta.plugins.abilities.rogue.assassin.CoupDeGrace;
 import com.playmonumenta.plugins.abilities.rogue.swordsage.BladeDance;
 import com.playmonumenta.plugins.abilities.rogue.swordsage.DeadlyRonde;
 import com.playmonumenta.plugins.abilities.rogue.swordsage.WindWalk;
-import com.playmonumenta.plugins.abilities._unused.Agility;
+import com.playmonumenta.plugins.abilities.meleescout.HasteWithoutWaste;
 import com.playmonumenta.plugins.abilities.scout.*;
 import com.playmonumenta.plugins.abilities._unused.HuntingCompanion;
 import com.playmonumenta.plugins.abilities._unused.SwiftCuts;
@@ -279,7 +279,6 @@ public class AbilityManager {
 
 			//********** SCOUT **********//
 			Quickdraw.INFO,
-			Agility.INFO,
 			HuntingCompanion.INFO,
 			Volley.INFO,
 			Swiftness.INFO,
@@ -292,6 +291,7 @@ public class AbilityManager {
 
 			//********** MELEESCOUT **********//
 			AdrenalineRush.INFO,
+			HasteWithoutWaste.INFO,
 
 			//********** WARRIOR **********//
 			CounterStrike.INFO,

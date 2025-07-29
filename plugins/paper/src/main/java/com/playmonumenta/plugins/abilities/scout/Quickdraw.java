@@ -14,21 +14,16 @@ import com.playmonumenta.plugins.itemstats.abilities.CharmManager;
 import com.playmonumenta.plugins.itemstats.enums.AttributeType;
 import com.playmonumenta.plugins.itemstats.enums.EnchantmentType;
 import com.playmonumenta.plugins.listeners.DamageListener;
-import com.playmonumenta.plugins.utils.EntityUtils;
-import com.playmonumenta.plugins.utils.ItemStatUtils;
-import com.playmonumenta.plugins.utils.ItemUtils;
+import com.playmonumenta.plugins.utils.*;
+
 import java.util.Objects;
+
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
-import org.bukkit.entity.AbstractArrow;
+import org.bukkit.entity.*;
 import org.bukkit.entity.AbstractArrow.PickupStatus;
-import org.bukkit.entity.Arrow;
-import org.bukkit.entity.Player;
-import org.bukkit.entity.Projectile;
-import org.bukkit.entity.Snowball;
-import org.bukkit.entity.Trident;
 import org.bukkit.event.entity.ProjectileLaunchEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -39,6 +34,9 @@ public class Quickdraw extends Ability {
 
 	private static final int QUICKDRAW_1_COOLDOWN = 20 * 6;
 	private static final int QUICKDRAW_2_COOLDOWN = 20 * 3;
+	private static final int DAMAGE_VALLEY = 11;
+	private static final int DAMAGE_ISLES = 17;
+	private static final int DAMAGE_RING = 22;
 
 	public static final String CHARM_DAMAGE = "Quickdraw Damage";
 	public static final String CHARM_COOLDOWN = "Quickdraw Cooldown";
@@ -52,7 +50,9 @@ public class Quickdraw extends Ability {
 			.descriptions(
 				String.format("Left-clicking with a projectile weapon instantly fires that projectile, fully charged. " +
 					"This skill can only apply Recoil once before touching the ground. Cooldown: %ds.", QUICKDRAW_1_COOLDOWN / 20),
-				String.format("Arrows shot with this skill are given +1 piercing. Cooldown: %ds.", QUICKDRAW_2_COOLDOWN / 20))
+				String.format("Cooldown: %ds.", QUICKDRAW_2_COOLDOWN / 20),
+				"Arrows shot with this skill are given +1 piercing."
+			)
 			.simpleDescription("Instantly fire the held projectile weapon.")
 			.cooldown(QUICKDRAW_1_COOLDOWN, QUICKDRAW_2_COOLDOWN, CHARM_COOLDOWN)
 			.addTrigger(new AbilityTriggerInfo<>("cast", "cast", Quickdraw::cast, new AbilityTrigger(AbilityTrigger.Key.LEFT_CLICK),
@@ -114,11 +114,38 @@ public class Quickdraw extends Ability {
 				proj = snowball;
 				proj.setVelocity(direction.normalize().multiply(3.0f));
 			}
+			case EGG -> {
+				Egg egg = world.spawn(eyeLoc, Egg.class);
+				ItemUtils.setSnowballItem(egg, inMainHand);
+				proj = egg;
+				proj.setVelocity(direction.normalize().multiply(3.0f));
+			}
+			case EXPERIENCE_BOTTLE -> {
+				ThrownExpBottle thrownExpBottle = world.spawn(eyeLoc, ThrownExpBottle.class);
+				ItemUtils.setSnowballItem(thrownExpBottle, inMainHand);
+				proj = thrownExpBottle;
+				proj.setVelocity(direction.normalize().multiply(3.0f));
+			}
+			case ENDER_PEARL -> {
+				EnderPearl enderPearl = world.spawn(eyeLoc, EnderPearl.class);
+				ItemUtils.setSnowballItem(enderPearl, inMainHand);
+				proj = enderPearl;
+				proj.setVelocity(direction.normalize().multiply(3.0f));
+			}
+			case FISHING_ROD -> {
+//				mPlayer.sendRawMessage("fishdraw");
+//
+//				FishHook hook = (FishHook) NmsUtils.getVersionAdapter();
+//				proj = hook;
+//				proj.setVelocity(direction.normalize().multiply(3.0f));
+				proj = world.spawnArrow(eyeLoc, direction, 3.0f, 0, Arrow.class);
+			}
 			default -> {
 				if (ItemStatUtils.hasEnchantment(inMainHand, EnchantmentType.THROWING_KNIFE)) {
 					proj = world.spawnArrow(eyeLoc, direction, 3f, 0, Arrow.class);
 				} else {
 					// How did we get here?
+					mPlayer.sendRawMessage(inMainHand.toString());
 					return false;
 				}
 			}
@@ -147,7 +174,7 @@ public class Quickdraw extends Ability {
 
 		proj.setShooter(mPlayer);
 		if (proj instanceof AbstractArrow arrow) {
-			arrow.setPierceLevel(Math.max(0, Math.min((isLevelTwo() ? 1 : 0) + (int) CharmManager.getLevel(mPlayer, CHARM_PIERCING), 127)));
+			arrow.setPierceLevel(Math.max(0, Math.min((isEnhanced() ? 1 : 0) + (int) CharmManager.getLevel(mPlayer, CHARM_PIERCING), 127)));
 			arrow.setCritical(true);
 			arrow.setPickupStatus(PickupStatus.CREATIVE_ONLY);
 		}
@@ -164,7 +191,7 @@ public class Quickdraw extends Ability {
 			ItemStatManager.PlayerItemStats.ItemStatsMap map = stats.getItemStats();
 			if (map != null) {
 				ItemStat projDamageAdd = Objects.requireNonNull(AttributeType.PROJECTILE_DAMAGE_ADD.getItemStat());
-				double damage = map.get(projDamageAdd);
+				double damage = PlayerUtils.getDifferentValuePerRegion(mPlayer, DAMAGE_VALLEY, DAMAGE_ISLES, DAMAGE_RING);
 				map.set(projDamageAdd, CharmManager.calculateFlatAndPercentValue(mPlayer, CHARM_DAMAGE, damage));
 			}
 		}

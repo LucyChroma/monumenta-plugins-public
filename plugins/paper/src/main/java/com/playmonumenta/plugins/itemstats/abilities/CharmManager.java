@@ -67,7 +67,7 @@ import com.playmonumenta.plugins.abilities.rogue.assassin.CoupDeGrace;
 import com.playmonumenta.plugins.abilities.rogue.swordsage.BladeDance;
 import com.playmonumenta.plugins.abilities.rogue.swordsage.DeadlyRonde;
 import com.playmonumenta.plugins.abilities.rogue.swordsage.WindWalk;
-import com.playmonumenta.plugins.abilities._unused.Agility;
+import com.playmonumenta.plugins.abilities.meleescout.HasteWithoutWaste;
 import com.playmonumenta.plugins.abilities.scout.*;
 import com.playmonumenta.plugins.abilities._unused.HuntingCompanion;
 import com.playmonumenta.plugins.abilities._unused.SwiftCuts;
@@ -836,7 +836,7 @@ public class CharmManager {
 			Culling.CHARM_RESISTANCE,
 
 			//Scout
-			Agility.CHARM_HASTE,
+			HasteWithoutWaste.CHARM_HASTE,
 			EagleEye.CHARM_COOLDOWN,
 			EagleEye.CHARM_DURATION,
 			EagleEye.CHARM_RADIUS,
