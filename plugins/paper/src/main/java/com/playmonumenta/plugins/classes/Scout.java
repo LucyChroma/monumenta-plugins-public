@@ -4,7 +4,7 @@ import com.google.common.collect.ImmutableList;
 import com.playmonumenta.plugins.abilities.PlaceholderAbility;
 import com.playmonumenta.plugins.abilities.scout.*;
 import com.playmonumenta.plugins.abilities._unused.HuntingCompanion;
-import com.playmonumenta.plugins.abilities._unused.Swiftness;
+import com.playmonumenta.plugins.abilities.scout.Swiftness;
 import com.playmonumenta.plugins.abilities._unused.Versatile;
 import com.playmonumenta.plugins.abilities.scout.bombardier.GravityBombOverworld;
 import com.playmonumenta.plugins.abilities.scout.bombardier.Munitions;

@@ -71,7 +71,7 @@ import com.playmonumenta.plugins.abilities.meleescout.HasteWithoutWaste;
 import com.playmonumenta.plugins.abilities.scout.*;
 import com.playmonumenta.plugins.abilities._unused.HuntingCompanion;
 import com.playmonumenta.plugins.abilities._unused.SwiftCuts;
-import com.playmonumenta.plugins.abilities._unused.Swiftness;
+import com.playmonumenta.plugins.abilities.scout.Swiftness;
 import com.playmonumenta.plugins.abilities.scout.bombardier.GravityBombOverworld;
 import com.playmonumenta.plugins.abilities.scout.bombardier.WindBomb;
 import com.playmonumenta.plugins.abilities.scout.hunter.PinningShot;
