@@ -6,23 +6,17 @@ import com.playmonumenta.plugins.abilities.AbilityInfo;
 import com.playmonumenta.plugins.abilities.AbilityTrigger;
 import com.playmonumenta.plugins.abilities.AbilityTriggerInfo;
 import com.playmonumenta.plugins.classes.ClassAbility;
+import com.playmonumenta.plugins.classes.Scout;
 import com.playmonumenta.plugins.cosmetics.skills.CosmeticSkills;
 import com.playmonumenta.plugins.cosmetics.skills.scout.SwiftnessCS;
-import com.playmonumenta.plugins.events.DamageEvent;
 import com.playmonumenta.plugins.itemstats.abilities.CharmManager;
 import com.playmonumenta.plugins.network.ClientModHandler;
 import com.playmonumenta.plugins.potion.PotionManager.PotionID;
-import com.playmonumenta.plugins.utils.EntityUtils;
-import com.playmonumenta.plugins.utils.FastUtils;
-import com.playmonumenta.plugins.utils.MessagingUtils;
-import com.playmonumenta.plugins.utils.StringUtils;
-import com.playmonumenta.plugins.utils.ZoneUtils;
+import com.playmonumenta.plugins.utils.*;
 import com.playmonumenta.plugins.utils.ZoneUtils.ZoneProperty;
 import org.bukkit.Material;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeModifier;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
@@ -50,13 +44,12 @@ public class Swiftness extends Ability {
 				String.format("In addition, gain Jump Boost %s when you are not inside a town.", StringUtils.toRoman(SWIFTNESS_EFFECT_JUMP_LVL + 1)),
 				String.format("You now have a %d%% chance to dodge any projectile or melee attack.", (int) (DODGE_CHANCE * 100)))
 			.simpleDescription("Gain speed and jump boost.")
-			.addTrigger(new AbilityTriggerInfo<>("toggle", "toggle jump boost", null, Swiftness::toggleJumpBoost, new AbilityTrigger(AbilityTrigger.Key.SWAP).enabled(false).sneaking(false).lookDirections(AbilityTrigger.LookDirection.UP)
-				.keyOptions(AbilityTrigger.KeyOptions.NO_PROJECTILE_WEAPON), null,
-				player -> {
-					Swiftness swiftness = Plugin.getInstance().mAbilityManager.getPlayerAbilityIgnoringSilence(player, Swiftness.class);
-					return swiftness != null && swiftness.isLevelTwo();
-				}))
+			.addTrigger(new AbilityTriggerInfo<>("toggle", "toggle jump boost", null, Swiftness::toggleJumpBoost,
+				new AbilityTrigger(AbilityTrigger.Key.SWAP).enabled(false).sneaking(false).lookDirections(AbilityTrigger.LookDirection.UP)
+				.keyOptions(AbilityTrigger.KeyOptions.NO_PROJECTILE_WEAPON), null)
+			)
 			.remove(Swiftness::removeModifier)
+			.canUse(player -> AbilityUtils.getClassNum(player) == Scout.CLASS_ID)
 			.displayItem(Material.RABBIT_FOOT);
 
 	private boolean mWasInNoMobilityZone = false;
@@ -71,17 +64,6 @@ public class Swiftness extends Ability {
 	}
 
 	@Override
-	public void onHurt(DamageEvent event, @Nullable Entity damager, @Nullable LivingEntity source) {
-		DamageEvent.DamageType type = event.getType();
-		if ((type == DamageEvent.DamageType.MELEE || type == DamageEvent.DamageType.PROJECTILE) && isEnhanced() && !event.isBlocked() && FastUtils.RANDOM.nextDouble() < DODGE_CHANCE + CharmManager.getLevelPercentDecimal(mPlayer, CHARM_DODGE)) {
-			event.setCancelled(true);
-			mPlayer.setNoDamageTicks(20);
-			mPlayer.setLastDamage(event.getDamage());
-			mCosmetic.swiftnessEnhancement(mPlayer);
-		}
-	}
-
-	@Override
 	public void periodicTrigger(boolean twoHertz, boolean oneSecond, int ticks) {
 		boolean isInNoMobilityZone = ZoneUtils.hasZoneProperty(mPlayer, ZoneProperty.NO_MOBILITY_ABILITIES);
 
@@ -93,7 +75,7 @@ public class Swiftness extends Ability {
 
 		mWasInNoMobilityZone = isInNoMobilityZone;
 
-		if (oneSecond && isLevelTwo() && !mWasInNoMobilityZone && mJumpBoost) {
+		if (oneSecond && !mWasInNoMobilityZone && mJumpBoost) {
 			mPlugin.mPotionManager.addPotion(mPlayer, PotionID.ABILITY_SELF, new PotionEffect(PotionEffectType.JUMP, 21, SWIFTNESS_EFFECT_JUMP_LVL + (int) CharmManager.getLevel(mPlayer, CHARM_JUMP_BOOST), true, false));
 		}
 	}
