@@ -29,7 +29,7 @@ public class Scout extends PlayerClass {
 		mAbilities.add(EagleEye.INFO);
 		mAbilities.add(Volley.INFO);
 		mAbilities.add(Sharpshooter.INFO);
-		mAbilities.add(PlaceholderAbility.INFO); // distant visions
+		mAbilities.add(OwnTempo.INFO);
 		mAbilities.add(ScrapshotOverworld.INFO); // scrapshot
 		mAbilities.add(FireworkBlastOverworld.INFO); // firework blast
 		mClass = CLASS_ID;

@@ -6,13 +6,12 @@ import com.playmonumenta.plugins.Plugin;
 import com.playmonumenta.plugins.classes.ClassAbility;
 import com.playmonumenta.plugins.itemstats.abilities.CharmManager;
 import com.playmonumenta.plugins.server.properties.ServerProperties;
+import com.playmonumenta.plugins.utils.MMLog;
 import com.playmonumenta.plugins.utils.MessagingUtils;
 import com.playmonumenta.plugins.utils.ScoreboardUtils;
 import it.unimi.dsi.fastutil.ints.IntList;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Locale;
+
+import java.util.*;
 import java.util.function.BiFunction;
 import java.util.function.Consumer;
 import java.util.function.IntFunction;
@@ -98,11 +97,6 @@ public class AbilityInfo<T extends Ability> {
 	}
 
 	public AbilityInfo<T> scoreboardId(String scoreboardId) {
-		try {
-			ScoreboardUtils.createObjective(scoreboardId, Component.text(scoreboardId));
-		} catch(Exception e) {
-			// already exists, do nothing
-		}
 		mScoreboardId = scoreboardId;
 		return this;
 	}

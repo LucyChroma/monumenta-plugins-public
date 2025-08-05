@@ -174,6 +174,8 @@ import java.util.UUID;
 import java.util.concurrent.ConcurrentSkipListSet;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
+
+import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
@@ -289,6 +291,7 @@ public class AbilityManager {
 			Sharpshooter.INFO,
 			ScrapshotOverworld.INFO,
 			FireworkBlastOverworld.INFO,
+			OwnTempo.INFO,
 
 			//********** MELEESCOUT **********//
 			WindsFriend.INFO,
@@ -470,6 +473,14 @@ public class AbilityManager {
 				mDisabledSpecAbilities.addAll(specAbilities);
 			}
 		}
+
+		mReferenceAbilities.forEach(ability -> {
+			try {
+				if(ability.getScoreboard() != null) ScoreboardUtils.createObjective(ability.getScoreboard(), Component.text(ability.getScoreboard()));
+			} catch(Exception e) {
+				// already exists, do nothing
+			}
+		});
 
 		mReferenceAbilities.sort(Comparator.comparingDouble(AbilityInfo::getPriorityAmount));
 	}

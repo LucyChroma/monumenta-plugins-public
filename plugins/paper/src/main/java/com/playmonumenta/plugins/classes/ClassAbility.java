@@ -85,19 +85,19 @@ public enum ClassAbility {
 	LUMINOUS_INFUSION("Luminous Infusion"),
 
 	// [Scout]
+	SWIFTNESS("Swiftness"),
 	QUICKDRAW("Quickdraw"),
-	SPECIALISTS_QUIVER("Specialist's Quiver"),
 	EAGLE_EYE("Eagle Eye"),
 	VOLLEY("Volley"),
 	SHARPSHOOTER("Sharpshooter"),
-	DISTANT_VISIONS("Distant Visions"),
+	OWN_TEMPO("Own Tempo"),
 	SCRAPSHOT_OVERWORLD("Scrapshot"),
 	FIREWORK_BLAST_OVERWORLD("Firework Blast"),
+	// 8th active
 
+	// unused
 	HUNTING_COMPANION("Hunting Companion"),
-	SWIFT_CUTS("Swift Cuts"), //placeholder for cosmetic
-	SWIFTNESS("Swiftness"),
-	AGILITY("Agility"),
+	SWIFT_CUTS("Swift Cuts"),
 
 	// Bombardier
 	MUNITIONS("Munitions"),
@@ -110,15 +110,28 @@ public enum ClassAbility {
 	PREDATOR_MISSILE("Predator Missile"),
 	SPLIT_ARROW("Split Arrow"),
 	PINNING_SHOT("Pinning Shot"),
+	SPECIALISTS_QUIVER("Specialist's Quiver"),
 
 	// [MeleeScout]
+	WINDS_FRIEND("Wind's Friend"),
+	RECKLESS_ACCELERATION("Reckless Acceleration"),
+	HASTE_WITHOUT_WASTE("Haste without Waste"),
+	THE_WIND_RISES("The Wind Rises"),
 	ADRENALINE_RUSH("Adrenaline Rush"),
+	MACHETE_SLASH("Machete Slash"),
+	SKYFELLER("Skyfeller"),
+	MIXED_RANGE_TACTICS("Mixed-Range Tactics"),
+	AGILITY("Agility"),
 
 	// Ranger
+	GALOS_WINDEATER("Galos Windeater"),
 	TACTICAL_MANEUVER("Tactical Maneuver"),
 	WHIRLING_BLADE("Whirling Blade"),
 
 	// Strategist
+	PRE_PLANNED_PATH("Pre-Planned Path"),
+	STRATEGISTS_FORESIGHT("Strategist’s Foresight"),
+	A_THOUSAND_CUTS("A Thousand Cuts"),
 
 	// [Warlock]
 	AMPLIFYING("Amplifying Hex"),
