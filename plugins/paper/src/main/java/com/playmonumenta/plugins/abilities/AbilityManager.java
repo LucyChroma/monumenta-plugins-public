@@ -50,6 +50,7 @@ import com.playmonumenta.plugins.abilities.mage.elementalist.ElementalSpiritFire
 import com.playmonumenta.plugins.abilities.mage.elementalist.ElementalSpiritIce;
 import com.playmonumenta.plugins.abilities.mage.elementalist.Starfall;
 import com.playmonumenta.plugins.abilities.meleescout.AdrenalineRush;
+import com.playmonumenta.plugins.abilities.meleescout.MacheteSlash;
 import com.playmonumenta.plugins.abilities.meleescout.WindsFriend;
 import com.playmonumenta.plugins.abilities.other.AttribaAttackDamage;
 import com.playmonumenta.plugins.abilities.other.AttribaAttackSpeed;
@@ -297,6 +298,7 @@ public class AbilityManager {
 			WindsFriend.INFO,
 			AdrenalineRush.INFO,
 			HasteWithoutWaste.INFO,
+			MacheteSlash.INFO,
 
 			//********** WARRIOR **********//
 			CounterStrike.INFO,

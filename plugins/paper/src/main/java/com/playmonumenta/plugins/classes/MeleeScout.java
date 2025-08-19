@@ -4,6 +4,7 @@ import com.google.common.collect.ImmutableList;
 import com.playmonumenta.plugins.abilities.PlaceholderAbility;
 import com.playmonumenta.plugins.abilities.meleescout.AdrenalineRush;
 import com.playmonumenta.plugins.abilities.meleescout.HasteWithoutWaste;
+import com.playmonumenta.plugins.abilities.meleescout.MacheteSlash;
 import com.playmonumenta.plugins.abilities.meleescout.ranger.TacticalManeuver;
 import com.playmonumenta.plugins.abilities.meleescout.ranger.WhirlingBlade;
 import net.kyori.adventure.text.format.TextColor;
@@ -21,7 +22,7 @@ public class MeleeScout extends PlayerClass {
 		mAbilities.add(HasteWithoutWaste.INFO); // Haste without Waste
 		mAbilities.add(PlaceholderAbility.INFO); // The Wind Rises
 		mAbilities.add(AdrenalineRush.INFO); // Adrenaline Rush
-		mAbilities.add(PlaceholderAbility.INFO); // Machete Slash
+		mAbilities.add(MacheteSlash.INFO); // Machete Slash
 		mAbilities.add(PlaceholderAbility.INFO); // Skyfeller
 		mAbilities.add(PlaceholderAbility.INFO); // Mixed-Range Tactics
 		mAbilities.add(PlaceholderAbility.INFO); // Agility
@@ -54,7 +55,8 @@ public class MeleeScout extends PlayerClass {
 
 		mTriggerOrder = ImmutableList.of(
 			TacticalManeuver.INFO,
-			WhirlingBlade.INFO // after wind bomb
+			WhirlingBlade.INFO, // after wind bomb
+			MacheteSlash.INFO
 		);
 	}
 }
